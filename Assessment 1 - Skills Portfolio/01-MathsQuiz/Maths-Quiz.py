@@ -25,6 +25,18 @@ game_state = {
 # get folder of the script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+# load and play background music
+try:
+    music_path = os.path.join(script_dir, "music", "bgjazz_music.mp3")
+    pygame.mixer.music.load(music_path)
+    pygame.mixer.music.set_volume(0.3)
+    
+    #  loops indefinitely
+    pygame.mixer.music.play(-1)  
+    print("Music loaded successfully")
+except Exception as e:
+    print(f"Music error: {e}")
+
 # loading gif for main menu
 gif_path = os.path.join(script_dir, "gifs", "rainy_night.gif")
 frames = []
