@@ -15,6 +15,13 @@ root.title('Le Charne — Full Course Math Quiz')
 root.geometry('960x540')
 root.resizable(False, False)
 
+# quiz state tracking
+game_state = {
+    'easy_completed': False,
+    'medium_completed': False,
+    'music_muted': False
+}
+
 # get folder of the script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
