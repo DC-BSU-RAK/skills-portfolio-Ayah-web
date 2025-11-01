@@ -6,6 +6,9 @@ import os
 import itertools
 import pygame
 
+# init pygame mixer for music
+pygame.mixer.init()
+
 # setting up of main menu window
 root = Tk()
 root.title('Le Charne — Full Course Math Quiz')
