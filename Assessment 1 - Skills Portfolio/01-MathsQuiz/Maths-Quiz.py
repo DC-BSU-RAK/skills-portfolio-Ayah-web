@@ -4,6 +4,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 import os
 import itertools
+import pygame
 
 # setting up of main menu window
 root = Tk()
