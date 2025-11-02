@@ -119,7 +119,7 @@ try:
 except Exception as e:
     print(f"Error loading mute icons: {e}")
 
-# menu and the selection of difficulty
+# menu
 def displayMenu():
     
     # difficulty labels
@@ -136,6 +136,17 @@ def on_enter(label):
 def on_leave(label):
     label.config(fg='white', font=('Georgia', 28))
 
+# user selects difficulty
+def select_difficulty(difficulty):
+    game_state['difficulty'] = difficulty
+    if difficulty == "QUIT":
+        root.quit()
+    elif difficulty == "EASY":
+        start_easy_level()
+    else:
+        messagebox.showinfo("Difficulty Selected",
+                            f"You selected {difficulty} mode!")
+        
 # clickable text labels
 
 # easy label
@@ -201,6 +212,14 @@ quit_label.place(x=50, y=380)
 quit_label.bind('<Button-1>', lambda e: select_difficulty("QUIT"))
 quit_label.bind('<Enter>', lambda e: on_enter(quit_label))
 quit_label.bind('<Leave>', lambda e: on_leave(quit_label))
+    
+# starting easy level
+def start_easy_level():
+    # hides initial menu
+    easy_label.place_forget()
+    moderate_label.place_forget()
+    advanced_label.place_forget()
+    quit_label.place_forget()
     
 # start the main loop
 root.mainloop()
