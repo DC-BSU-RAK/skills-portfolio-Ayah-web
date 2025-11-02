@@ -233,5 +233,18 @@ def start_easy_level():
     
     story_label.pack(anchor="w")
     
+    story_lines = [
+        "It’s raining hard tonight. It's weird though, weather forecast didn't mention anything this morning.",
+        "I should’ve brought an umbrella atleast. Great.",
+        "There’s a small restaurant across the street. Warm light inside, maybe they’re still open?",
+        "‘Le Charne’. Must be new...",
+        "As I step inside, the smell of wine and something… metallic hits me.",
+        "The place feels cozy though! The candlelight, drinks, and soft jazz. The storm fades away outside.",
+        "A man behind the counter looks up, startled. His sleeves are damp… is that—?",
+        "‘Ah, welcome!’ he smiles too quickly as he notices me stare at his mouth and shirt. ‘Pomegranate juice. Messy fruit eh?’ he chuckles.",
+        "‘You’ve come at the perfect time stranger,’ he adds. ‘I’ll serve you a drink and meal on the house...if you can solve a few numerical curiosities.’",
+        "He leans in, eyes ruby red with a glimmer. ‘Shall we begin?’"
+    ]
+    
 # start the main loop
 root.mainloop()
