@@ -221,5 +221,17 @@ def start_easy_level():
     advanced_label.place_forget()
     quit_label.place_forget()
     
+    # dialogue text box
+    text_box = tk.Frame(root, bg="black", height=130)
+    text_box.pack(side="bottom, fill=x")
+    
+    story_label = tk.Lable(
+        text_box, text="", font=("Georgia", 16),
+        fg="white", bg="black", wraplength=900, justify="left",
+        anchor="w", padx=20, pady=10
+    )
+    
+    story_label.pack(anchor="w")
+    
 # start the main loop
 root.mainloop()
