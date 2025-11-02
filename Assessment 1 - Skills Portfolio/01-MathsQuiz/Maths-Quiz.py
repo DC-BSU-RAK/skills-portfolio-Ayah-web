@@ -21,7 +21,8 @@ root.configure(bg='#000008')
 game_state = {
     'easy_completed': False,
     'medium_completed': False,
-    'music_muted': False
+    'music_muted': False,
+    'difficulty':None
 }
 
 # get folder of the script
@@ -118,16 +119,15 @@ try:
 except Exception as e:
     print(f"Error loading mute icons: {e}")
 
-# button click handler
-def select_difficulty(difficulty):
-    game_state['difficulty'] = difficulty
-    print(f"Selected difficulty: {difficulty}")
+# menu and the selection of difficulty
+def displayMenu():
     
-    if difficulty == "QUIT":
-        root.quit()
-    else:
-        messagebox.showinfo("Difficulty Selected", 
-                           f"You selected {difficulty} mode!\n\nQuiz functionality will be implemented next!")
+    # difficulty labels
+    easy_label.place(x=50, y=200)
+    moderate_label.place(x=50, y=260)
+    advanced_label.place(x=50, y=320)
+    quit_label.place(x=50, y=380)
+    game_state['difficulty'] = None
 
 # hover effects for labels
 def on_enter(label):
