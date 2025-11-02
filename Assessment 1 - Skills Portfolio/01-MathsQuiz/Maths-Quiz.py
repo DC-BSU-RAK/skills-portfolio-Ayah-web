@@ -80,6 +80,11 @@ else:
     print("No frames loaded - check if gif file exists")
     bg_label.config(bg='#000008')
     
+# stop the bg gif to switch to restaurant
+def stop_gif():
+    global frames
+    frames = []
+    
 # mute button
 def toggle_music():
     if game_state['music_muted']:
@@ -93,10 +98,33 @@ def toggle_music():
         mute_btn.config(image=muted_icon)
         print("Music muted")
 
-# Load mute/unmute icons
+#  confirmation to quit
+def quit_game():
+    confirm = messagebox.askyesno("Quit Game?", "Are you sure you want to quit?")
+    if confirm:
+        root.quit()
+        
+# mute label
+# mute_btn = tk.Label(root, text="MUTE", font=('Georgia', 16, 'bold'), fg="white",
+                    # bg=bg_color, cursor='hand2')
+# mute_btn.place(x=900, y=485)
+# mute_btn.bind('<Button-1>', lambda e: toggle_music())
+# mute_btn.bind('<Enter>', lambda e: mute_btn.config(fg="#E71C1C"))
+# mute_btn.bind('<Leave>', lambda e: mute_btn.config(fg="white"))
+
+# quit button
+quit_btn = tk.Label(root, text="QUIT", font=('Georgia', 16, 'bold'), fg="white",
+                    bg=bg_color, cursor='hand2')
+quit_btn.place(x=840, y=485)
+quit_btn.bind('<Button-1>', lambda e: quit_game())
+quit_btn.bind('<Enter>', lambda e: quit_btn.config(fg="#E71C1C"))
+quit_btn.bind('<Leave>', lambda e: quit_btn.config(fg="white"))
+
+# load mute/unmute icons
 try:
     unmuted_path = os.path.join(script_dir, "images", "unmuted.png")
     muted_path = os.path.join(script_dir, "images", "muted.png")
+    
     
     unmuted_img = Image.open(unmuted_path).resize((40, 40), Image.Resampling.LANCZOS)
     unmuted_icon = ImageTk.PhotoImage(unmuted_img)
@@ -212,6 +240,16 @@ quit_label.place(x=50, y=380)
 quit_label.bind('<Button-1>', lambda e: select_difficulty("QUIT"))
 quit_label.bind('<Enter>', lambda e: on_enter(quit_label))
 quit_label.bind('<Leave>', lambda e: on_leave(quit_label))
+   
+# helps with resizing image
+def resize_image_keep_aspect(img_path, target_height):
+    img = Image.open(img_path)
+    w, h = img.size
+    ratio = target_height / h
+    new_width = int(w * ratio)
+    new_height = target_height
+    img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+    return img
     
 # starting easy level
 def start_easy_level():
@@ -222,20 +260,53 @@ def start_easy_level():
     quit_label.place_forget()
     
     # dialogue text box
-    text_box = tk.Frame(root, bg="black", height=130)
-    text_box.pack(side="bottom, fill=x")
+    text_box_height = 180
+    text_box = tk.Frame(root, bg="black", height=text_box_height)
+    text_box.place(x=0, y=540 - text_box_height, width=960, height=text_box_height)
     
-    story_label = tk.Lable(
+    story_label = tk.Label(
         text_box, text="", font=("Georgia", 16),
         fg="white", bg="black", wraplength=900, justify="left",
         anchor="w", padx=20, pady=10
     )
     
-    story_label.pack(anchor="w")
+    story_label.place(x=0, y=0, width=960, height=text_box_height)
+    
+    try:
+        surprised_barista_path = os.path.join(script_dir, "images", "surprised_barista.png")
+        normal_barista_path = os.path.join(script_dir, "images", "normal_barista.png")
+
+        target_height = 300
+        surprised_img = resize_image_keep_aspect(surprised_barista_path, target_height)
+        normal_img = resize_image_keep_aspect(normal_barista_path, target_height)
+        
+        surprised_barista = ImageTk.PhotoImage(surprised_img)
+        normal_barista = ImageTk.PhotoImage(normal_img)
+    except Exception as e:
+        print(f"Error loading barista images: {e}")
+        barista_shocked = barista_smile = None
+        
+    # placing barista image
+    root.update_idletasks()
+    barista_width, barista_height = surprised_img.size if surprised_img else (250, 300)
+    barista_label = tk.Label(root, bg="black")
+    barista_label.place(
+    x=root.winfo_width() - barista_width,
+    y=root.winfo_height() - text_box_height - barista_height
+    )
+    
+    # restaurant background
+    restaurant_path = os.path.join(script_dir, "images", "restaurant.png")
+    try:
+        restaurant_img = Image.open(restaurant_path).resize((960, 540), Image.Resampling.LANCZOS)
+        restaurant_bg = ImageTk.PhotoImage(restaurant_img)
+    except Exception as e:
+        print(f"Error loading restaurant background: {e}")
+        restaurant_bg = None
     
     story_lines = [
         "It’s raining hard tonight. It's weird though, weather forecast didn't mention anything this morning.",
-        "I should’ve brought an umbrella atleast. Great.",
+        "I should’ve brought an umbrella at least. Great.",
         "There’s a small restaurant across the street. Warm light inside, maybe they’re still open?",
         "‘Le Charne’. Must be new...",
         "As I step inside, the smell of wine and something… metallic hits me.",
@@ -245,6 +316,34 @@ def start_easy_level():
         "‘You’ve come at the perfect time stranger,’ he adds. ‘I’ll serve you a drink and meal on the house...if you can solve a few numerical curiosities.’",
         "He leans in, eyes ruby red with a glimmer. ‘Shall we begin?’"
     ]
+    current_line =  0
+    
+    # advancing to next lines
+    def next_line(event=None):
+        nonlocal current_line
+        if current_line < len(story_lines):
+            story_label.config(text=story_lines[current_line])
+            
+            # barista expression change
+            if current_line == 6 and surprised_barista:
+                barista_label.config(image=surprised_barista)  
+            if current_line == 8 and normal_barista:
+                barista_label.config(image=normal_barista)
+                
+            # change background when stepping inside
+            if current_line == 4 and restaurant_bg:
+                stop_gif()  # stop GIF animation
+                bg_label.config(image=restaurant_bg)
+                bg_label.image = restaurant_bg  
+        else:
+            root.unbind("<Key>")
+            story_label.config(text=" Math quiz starts here")
+        current_line +=1
+            
+    root.bind("<Key>", next_line)
+    next_line()
+    
+    
     
 # start the main loop
 root.mainloop()
