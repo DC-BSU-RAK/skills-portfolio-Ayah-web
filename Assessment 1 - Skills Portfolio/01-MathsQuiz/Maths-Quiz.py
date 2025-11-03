@@ -22,7 +22,8 @@ game_state = {
     'easy_completed': False,
     'medium_completed': False,
     'music_muted': False,
-    'difficulty':None
+    'difficulty': None,
+    'score': 0
 }
 
 # get folder of the script
