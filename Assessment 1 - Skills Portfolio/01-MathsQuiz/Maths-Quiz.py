@@ -274,6 +274,11 @@ def start_easy_level():
     story_label.place(x=0, y=0, width=960, height=text_box_height)
     
     try:
+        # black background panel on right side
+        barista_panel_width = 260
+        right_panel = tk.Frame(root, bg="black")
+        right_panel.place(x = 960 - barista_panel_width, y = 0, width = barista_panel_width, height=540)
+        
         surprised_barista_path = os.path.join(script_dir, "images", "surprised_barista.png")
         normal_barista_path = os.path.join(script_dir, "images", "normal_barista.png")
 
@@ -292,8 +297,8 @@ def start_easy_level():
     barista_width, barista_height = surprised_img.size if surprised_img else (250, 300)
     barista_label = tk.Label(root, bg="black")
     barista_label.place(
-    x=root.winfo_width() - barista_width,
-    y=root.winfo_height() - text_box_height - barista_height
+    x=(barista_panel_width - barista_width) // 2,
+    y= 540 - text_box_height - barista_height
     )
     
     # restaurant background
