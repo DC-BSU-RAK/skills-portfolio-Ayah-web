@@ -429,6 +429,23 @@ def start_easy_level():
             else:
                feedback_label.config(text=f"Time's up! 0 points")
                parent_frame.after(1000, next_question)
+
+        # displays next question
+        def displayProblem():
+            nonlocal current_question, attempts, timer_seconds, timer_id
+            attempts = 0
+            timer_seconds = 20
+            if timer_id:
+               parent_frame.after_cancel(timer_id)
+            countdown()
+
+            num1 = randomInt()
+            num2 = randomInt()
+            op = decideOperation()
+            current_question = {"num1": num1, "num2": num2, "op": op}
+            question_label.config(text=f"{num1} {op} {num2} =")
+            answer_entry.delete(0, END)
+            feedback_label.config(text="")
     # function of starting quiz
     def start_quiz():
         # hides story box
