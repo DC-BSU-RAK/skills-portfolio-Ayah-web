@@ -486,6 +486,14 @@ def start_easy_level():
                 displayProblem()
             else:
                 displayResults()
+
+        # displays results
+        def displayResults():
+            for widget in parent_frame.winfo_children():
+                widget.destroy()
+
+            result_frame = tk.Frame(parent_frame, bg="black")
+            result_frame.place(x=0, y=0, relwidth=1, relheight=1)
     # function of starting quiz
     def start_quiz():
         # hides story box
