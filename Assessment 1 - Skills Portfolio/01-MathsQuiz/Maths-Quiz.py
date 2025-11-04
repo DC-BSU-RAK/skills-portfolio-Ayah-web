@@ -418,6 +418,17 @@ def start_easy_level():
         # random operation
         def decideOperation():
             return random.choice(["+", "-"])
+
+        # timer countdown
+        def countdown():
+            nonlocal timer_seconds, timer_id
+            timer_label.config(text=f"Time: {timer_seconds}")
+            if timer_seconds > 0:
+               timer_seconds -= 1
+               timer_id = parent_frame.after(1000, countdown)
+            else:
+               feedback_label.config(text=f"Time's up! 0 points")
+               parent_frame.after(1000, next_question)
     # function of starting quiz
     def start_quiz():
         # hides story box
