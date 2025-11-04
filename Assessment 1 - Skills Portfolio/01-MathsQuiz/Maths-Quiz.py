@@ -274,7 +274,6 @@ def start_easy_level():
     story_label.place(x=0, y=0, width=960, height=text_box_height)
     
     try:
-        # black background panel on right side
         barista_panel_width = 260
         right_panel = tk.Frame(root, bg="black")
         right_panel.place(x = 960 - barista_panel_width, y = 0, width = barista_panel_width, height=540)
@@ -288,18 +287,14 @@ def start_easy_level():
         
         surprised_barista = ImageTk.PhotoImage(surprised_img)
         normal_barista = ImageTk.PhotoImage(normal_img)
+        
     except Exception as e:
         print(f"Error loading barista images: {e}")
         barista_shocked = barista_smile = None
         
-    # placing barista image
-    root.update_idletasks()
-    barista_width, barista_height = surprised_img.size if surprised_img else (250, 300)
-    barista_label = tk.Label(root, bg="black")
-    barista_label.place(
-    x=(barista_panel_width - barista_width) // 2,
-    y= 540 - text_box_height - barista_height
-    )
+    # barista label (hidden initially)
+    barista_label = tk.Label(right_panel, bg="black")
+    barista_label.place_forget()
     
     # placing mute and quit in right panel
     mute_btn.place_forget()
