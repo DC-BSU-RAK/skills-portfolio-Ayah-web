@@ -532,6 +532,32 @@ def start_easy_level():
                 img_label.place(relx=0.5, rely=0.4, anchor="center")
             except Exception as e:
                 print(f"Error loading result image: {e}")
+
+            result_label = tk.Label(result_frame, text=result_text,
+                                    font=("Georgia", 18), fg="#E7CBA9", 
+                                    bg="black", wraplength=parent_frame.winfo_width(), 
+                                    justify="center")
+            result_label.place(relx=0.5, rely=0.75, anchor="center")
+            
+            # play again button
+            replay_btn = tk.Button(result_frame, text="Play Again", font=("Georgia", 14), 
+                                   command=lambda: replay_quiz(parent_frame))
+            replay_btn.place(relx=0.5, rely=0.9, anchor="center")
+            
+        def replay_quiz(parent_frame):
+           for widget in parent_frame.winfo_children():
+               widget.destroy()
+           start_math_quiz(parent_frame, quiz_label=None)
+
+        # bind enter key to submit answer
+        answer_entry.bind("<Return>", isCorrect)
+
+        # start the first question
+        displayProblem()
+        
+        # answer key submits input
+        answer_entry.focus_set()
+
     # function of starting quiz
     def start_quiz():
         # hides story box
