@@ -378,6 +378,16 @@ def start_easy_level():
         timer_seconds = 20
         timer_id = None
     
+        
+         # difficulty ranges
+        diff = game_state['difficulty']
+        if diff == "EASY":
+           min_val, max_val = 1, 9
+        elif diff == "MODERATE":
+           min_val, max_val = 10, 99
+        # advanced
+        else:  
+           min_val, max_val = 1000, 9999
     # function of starting quiz
     def start_quiz():
         # hides story box
@@ -390,19 +400,19 @@ def start_easy_level():
         quiz_frame = tk.Frame(root, bg="#1A1A1A", highlightbackground="#B19775", highlightthickness=3)
         quiz_frame.place(x=0, y=0, width=quiz_box_width, height=quiz_box_height)
 
-        quiz_label = tk.Label(
-            quiz_frame,
-            text="Welcome to Le Charne’s Full Course Math Quiz \n\nSolve quickly to impress the barista!",
-            font=("Georgia", 18, "bold"),
-            fg="#E7CBA9",
-            bg="#1A1A1A",
-            wraplength=quiz_box_width - 40,
-            justify="center"
+        welcome_label = tk.Label(
+        quiz_frame,
+        text="Welcome to Le Charne’s Full Course Math Quiz \n\nSolve quickly to impress the barista!",
+        font=("Georgia", 18, "bold"),
+        fg="#E7CBA9",
+        bg="#1A1A1A",
+        wraplength=960-barista_panel_width-40,
+        justify="center"
         )
-        quiz_label.place(relx=0.5, rely=0.3, anchor="center")
+        welcome_label.place(relx=0.5, rely=0.3, anchor="center")
 
         # placeholder for logic
-        start_math_quiz(quiz_frame)
+        start_math_quiz(quiz_frame, quiz_label=welcome_label)
     
     # advancing to next lines
     def next_line(event=None):
