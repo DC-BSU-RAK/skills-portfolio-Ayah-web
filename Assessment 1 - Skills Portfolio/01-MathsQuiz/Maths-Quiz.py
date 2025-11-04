@@ -259,23 +259,11 @@ def start_easy_level():
     advanced_label.place_forget()
     quit_label.place_forget()
     
-    # dialogue text box
-    text_box_height = 180
-    text_box = tk.Frame(root, bg="black", height=text_box_height)
-    text_box.place(x=0, y=540 - text_box_height, width=960, height=text_box_height)
-    
-    story_label = tk.Label(
-        text_box, text="", font=("Georgia", 16),
-        fg="white", bg="black", wraplength=900, justify="left",
-        anchor="w", padx=20, pady=10
-    )
-    
-    story_label.place(x=0, y=0, width=960, height=text_box_height)
+    barista_panel_width = 260
+    right_panel = tk.Frame(root, bg="black")
+    right_panel.place(x=960 - barista_panel_width, y=0, width=barista_panel_width, height=540)
     
     try:
-        barista_panel_width = 260
-        right_panel = tk.Frame(root, bg="black")
-        right_panel.place(x = 960 - barista_panel_width, y = 0, width = barista_panel_width, height=540)
         
         surprised_barista_path = os.path.join(script_dir, "images", "surprised_barista.png")
         normal_barista_path = os.path.join(script_dir, "images", "normal_barista.png")
