@@ -370,14 +370,13 @@ def start_easy_level():
     ]
     current_line =  0
     
-    def start_math_quiz(parent_frame):
+    def start_math_quiz(parent_frame, quiz_label=None):
         score = 0
         question_number = 0
         max_questions = 10
         attempts = 0
         timer_seconds = 20
         timer_id = None
-    
         
          # difficulty ranges
         diff = game_state['difficulty']
@@ -438,6 +437,10 @@ def start_easy_level():
             if timer_id:
                parent_frame.after_cancel(timer_id)
             countdown()
+            
+            # destroy welcome label if it exists
+            if quiz_label and quiz_label.winfo_exists():
+                quiz_label.destroy()
 
             num1 = randomInt()
             num2 = randomInt()
