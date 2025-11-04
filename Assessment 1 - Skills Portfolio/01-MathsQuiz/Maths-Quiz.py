@@ -114,7 +114,9 @@ def quit_game():
 # mute_btn.bind('<Leave>', lambda e: mute_btn.config(fg="white"))
 
 # quit button
-                    bg=bg_color, cursor='hand2')
+quit_btn = tk.Label(root, text="QUIT",
+                    font=('Georgia', 16, 'bold'),
+                    fg="white", bg=bg_color, cursor='hand2')
 quit_btn.place(x=840, y=485)
 quit_btn.bind('<Button-1>', lambda e: quit_game())
 quit_btn.bind('<Enter>', lambda e: quit_btn.config(fg="#E71C1C"))
@@ -277,6 +279,7 @@ def start_easy_level():
         
     except Exception as e:
         print(f"Error loading barista images: {e}")
+        barista_label = None
         
     # barista label (hidden initially)
     barista_label = tk.Label(right_panel, bg="black")
@@ -284,6 +287,7 @@ def start_easy_level():
     
     mute_btn.place_forget()
     quit_btn.place_forget()
+
     mute_btn.config(bg="black")
     quit_btn.config(bg="black")
 
