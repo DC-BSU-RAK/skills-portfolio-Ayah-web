@@ -98,6 +98,19 @@ def toggle_music():
         game_state['music_muted'] = True
         mute_btn.config(image=muted_icon)
         print("Music muted")
+        
+# separate mute button for when math quiz starts
+def toggle_music_for_quiz(button):
+    if game_state['music_muted']:
+        pygame.mixer.music.set_volume(0.3)
+        game_state['music_muted'] = False
+        button.config(image=unmuted_icon)
+        print("Music unmuted")
+    else:
+        pygame.mixer.music.set_volume(0)
+        game_state['music_muted'] = True
+        button.config(image=muted_icon)
+        print("Music muted")
 
 #  confirmation to quit
 def quit_game():
@@ -112,15 +125,6 @@ def quit_game():
 # mute_btn.bind('<Button-1>', lambda e: toggle_music())
 # mute_btn.bind('<Enter>', lambda e: mute_btn.config(fg="#E71C1C"))
 # mute_btn.bind('<Leave>', lambda e: mute_btn.config(fg="white"))
-
-# quit button
-quit_btn = tk.Label(root, text="QUIT",
-                    font=('Georgia', 16, 'bold'),
-                    fg="white", bg=bg_color, cursor='hand2')
-quit_btn.place(x=840, y=485)
-quit_btn.bind('<Button-1>', lambda e: quit_game())
-quit_btn.bind('<Enter>', lambda e: quit_btn.config(fg="#E71C1C"))
-quit_btn.bind('<Leave>', lambda e: quit_btn.config(fg="white"))
 
 # load mute/unmute icons
 try:
@@ -284,21 +288,40 @@ def start_easy_level():
     # barista label (hidden initially)
     barista_label = tk.Label(right_panel, bg="black")
     barista_label.place_forget()
-    
-    mute_btn.place_forget()
-    quit_btn.place_forget()
 
-    mute_btn.config(bg="black")
-    quit_btn.config(bg="black")
-
-    mute_btn.place(x=(barista_panel_width - 40) // 2 + 960 - barista_panel_width, y=440)
-    quit_btn.place(x=(barista_panel_width - 50) // 2 + 960 - barista_panel_width, y=490)
+    quiz_mute_btn = tk.Label(
+    right_panel,
+    image=unmuted_icon if not game_state['music_muted'] else muted_icon,
+    cursor='hand2',
+    bd=0,
+    highlightthickness=0,
+    bg="black"
+    )
     
+    quiz_mute_btn.bind('<Button-1>', lambda e: toggle_music_for_quiz(quiz_mute_btn))
+    quiz_mute_btn.place(x=(barista_panel_width - 40)//2, y=360)
+    
+    right_quit_btn = tk.Label(
+    right_panel,
+    text="QUIT",
+    font=('Georgia', 16, 'bold'),
+    fg="white",
+    bg="black",
+    cursor='hand2'
+    )
+    
+    # right quit button
+    right_quit_btn.bind('<Button-1>', lambda e: quit_game())
+    right_quit_btn.bind('<Enter>', lambda e: right_quit_btn.config(fg="#E71C1C"))
+    right_quit_btn.bind('<Leave>', lambda e: right_quit_btn.config(fg="white"))
+    right_quit_btn.place(x=(barista_panel_width - 50)//2, y=410)
+
     # text box
     text_box_height = 180
     text_box = tk.Frame(root, bg="black", height=text_box_height)
     text_box.place(x=0, y=540 - text_box_height, width=960, height=text_box_height)
     
+    # story label
     story_label = tk.Label(
         text_box,
         text="",
@@ -313,6 +336,7 @@ def start_easy_level():
     )
     story_label.place(x=0, y=0, width=960, height=text_box_height)
 
+    # hint label
     hint_label = tk.Label(
         text_box,
         text="Press any key to continue...",
@@ -331,6 +355,7 @@ def start_easy_level():
         print(f"Error loading restaurant background: {e}")
         restaurant_bg = None
     
+    # story lines for the plot
     story_lines = [
         "It’s raining hard tonight. It's weird though, weather forecast didn't mention anything this morning.",
         "I should’ve brought an umbrella at least. Great.",
@@ -345,6 +370,7 @@ def start_easy_level():
     ]
     current_line =  0
     
+    # function of starting quiz
     def start_quiz():
         # hides story box
         text_box.place_forget()
