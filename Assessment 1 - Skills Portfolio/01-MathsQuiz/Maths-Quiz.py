@@ -6,6 +6,7 @@ from PIL import ImageTk, Image
 import os
 import itertools
 import pygame
+import random 
 
 # init pygame mixer for music
 pygame.mixer.init()
