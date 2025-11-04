@@ -410,6 +410,14 @@ def start_easy_level():
         timer_label.place(relx=0.5, rely=0.2, anchor="center")
         
         current_question = {}
+        
+        # random integer
+        def randomInt():
+            return random.randint(min_val, max_val)
+
+        # random operation
+        def decideOperation():
+            return random.choice(["+", "-"])
     # function of starting quiz
     def start_quiz():
         # hides story box
