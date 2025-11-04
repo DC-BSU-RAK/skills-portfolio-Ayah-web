@@ -388,6 +388,28 @@ def start_easy_level():
         # advanced
         else:  
            min_val, max_val = 1000, 9999
+           
+        # Score Label
+        score_label = tk.Label(parent_frame, text=f"Score: {score}", font=("Georgia", 14), fg="lightgreen", bg="#1A1A1A")
+        score_label.place(relx=0.85, rely=0.05, anchor="center")
+           
+        # question Label
+        question_label = tk.Label(parent_frame, text="", font=("Georgia", 18), fg="#E7CBA9", bg="#1A1A1A")
+        question_label.place(relx=0.5, rely=0.3, anchor="center")
+
+        # answer entry widget
+        answer_entry = tk.Entry(parent_frame, font=("Georgia", 16))
+        answer_entry.place(relx=0.5, rely=0.5, anchor="center")
+
+        # feedback Label
+        feedback_label = tk.Label(parent_frame, text="", font=("Georgia", 14), fg="yellow", bg="#1A1A1A")
+        feedback_label.place(relx=0.5, rely=0.6, anchor="center")
+        
+        # timer Label
+        timer_label = tk.Label(parent_frame, text=f"Time: {timer_seconds}", font=("Georgia", 14), fg="orange", bg="#1A1A1A")
+        timer_label.place(relx=0.5, rely=0.2, anchor="center")
+        
+        current_question = {}
     # function of starting quiz
     def start_quiz():
         # hides story box
