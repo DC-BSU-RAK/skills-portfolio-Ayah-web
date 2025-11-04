@@ -277,7 +277,6 @@ def start_easy_level():
         
     except Exception as e:
         print(f"Error loading barista images: {e}")
-        barista_shocked = barista_smile = None
         
     # barista label (hidden initially)
     barista_label = tk.Label(right_panel, bg="black")
@@ -285,9 +284,16 @@ def start_easy_level():
     
     mute_btn.place_forget()
     quit_btn.place_forget()
-    
     mute_btn.config(bg="black")
     quit_btn.config(bg="black")
+
+    mute_btn.place(x=(barista_panel_width - 40) // 2 + 960 - barista_panel_width, y=440)
+    quit_btn.place(x=(barista_panel_width - 50) // 2 + 960 - barista_panel_width, y=490)
+    
+    # text box
+    text_box_height = 180
+    text_box = tk.Frame(root, bg="black", height=text_box_height)
+    text_box.place(x=0, y=540 - text_box_height, width=960, height=text_box_height)
     
     mute_btn.place(x=(barista_panel_width - 40) // 2, y = 480)
     quit_btn.place(x=(barista_panel_width - 50) // 2, y = 520)
