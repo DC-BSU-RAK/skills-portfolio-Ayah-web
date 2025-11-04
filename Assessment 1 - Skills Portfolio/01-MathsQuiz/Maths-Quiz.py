@@ -446,6 +446,21 @@ def start_easy_level():
             question_label.config(text=f"{num1} {op} {num2} =")
             answer_entry.delete(0, END)
             feedback_label.config(text="")
+
+        # handles answer submitted
+        def isCorrect(event=None):
+            nonlocal score, question_number, attempts, timer_id
+            if timer_id:
+               parent_frame.after_cancel(timer_id)
+            try:
+                user_answer = int(answer_entry.get())
+            except ValueError:
+                feedback_label.config(text="Enter a valid number!")
+                # restarts timer
+                countdown()  
+                return
+
+            correct_answer = current_question['num1'] + current_question['num2'] if current_question['op'] == "+" else current_question['num1'] - current_question['num2']
     # function of starting quiz
     def start_quiz():
         # hides story box
