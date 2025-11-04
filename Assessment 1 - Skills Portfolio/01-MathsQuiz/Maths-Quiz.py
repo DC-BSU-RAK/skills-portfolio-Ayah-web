@@ -296,7 +296,6 @@ def start_easy_level():
     barista_label = tk.Label(right_panel, bg="black")
     barista_label.place_forget()
     
-    # placing mute and quit in right panel
     mute_btn.place_forget()
     quit_btn.place_forget()
     
