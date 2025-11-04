@@ -345,6 +345,31 @@ def start_easy_level():
     ]
     current_line =  0
     
+    def start_quiz():
+        # hides story box
+        text_box.place_forget()
+
+        # create quiz frame
+        quiz_box_width = 960 - barista_panel_width
+        quiz_box_height = 540
+
+        quiz_frame = tk.Frame(root, bg="#1A1A1A", highlightbackground="#B19775", highlightthickness=3)
+        quiz_frame.place(x=0, y=0, width=quiz_box_width, height=quiz_box_height)
+
+        quiz_label = tk.Label(
+            quiz_frame,
+            text="Welcome to Le Charne’s Full Course Math Quiz \n\nSolve quickly to impress the barista!",
+            font=("Georgia", 18, "bold"),
+            fg="#E7CBA9",
+            bg="#1A1A1A",
+            wraplength=quiz_box_width - 40,
+            justify="center"
+        )
+        quiz_label.place(relx=0.5, rely=0.3, anchor="center")
+
+        # placeholder for logic
+        start_math_quiz(quiz_frame)
+    
     # advancing to next lines
     def next_line(event=None):
         nonlocal current_line
@@ -364,7 +389,8 @@ def start_easy_level():
                 bg_label.image = restaurant_bg  
         else:
             root.unbind("<Key>")
-            story_label.config(text=" Math quiz starts here")
+            start_quiz()
+            
         current_line +=1
             
     root.bind("<Key>", next_line)
