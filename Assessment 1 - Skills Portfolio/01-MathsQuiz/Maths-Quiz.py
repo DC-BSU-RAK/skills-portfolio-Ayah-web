@@ -508,6 +508,30 @@ def start_easy_level():
             else:
                 result_text = f"Quiz Over! Score: {score}/100\nThe barista glares and bares his teeth... You failed with an 'F'."
                 img_path = os.path.join(script_dir, "images", "poison.jpg")
+                
+                try:
+                    bloody_barista_path = os.path.join(script_dir, "images", "bloody_barista.png")
+                    bloody_img = resize_image_keep_aspect(bloody_barista_path, target_height)
+                    bloody_photo = ImageTk.PhotoImage(bloody_img)
+                    barista_label.config(image=bloody_photo)
+                    barista_label.image = bloody_photo
+                    barista_label.place(
+                    x=(barista_panel_width - bloody_img.width)//2,
+                    y=(540 - text_box_height - target_height)//2
+                    )
+                except Exception as e:
+                    print(f"Error loading bloody barista image: {e}")
+            
+            # load image
+            try:
+                result_img = Image.open(img_path)
+                result_img = result_img.resize((300, 300), Image.Resampling.LANCZOS)
+                result_photo = ImageTk.PhotoImage(result_img)
+                img_label = tk.Label(result_frame, image=result_photo, bg="black")
+                img_label.image = result_photo
+                img_label.place(relx=0.5, rely=0.4, anchor="center")
+            except Exception as e:
+                print(f"Error loading result image: {e}")
     # function of starting quiz
     def start_quiz():
         # hides story box
