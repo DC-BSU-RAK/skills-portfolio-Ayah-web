@@ -378,9 +378,17 @@ def start_easy_level():
             
             # barista expression change
             if current_line == 6 and surprised_barista:
-                barista_label.config(image=surprised_barista)  
+                barista_label.config(image=surprised_barista)
+                barista_label.place(
+                    x=(barista_panel_width - surprised_img.width)//2,
+                    y=(540 - text_box_height - target_height)//2
+                )  
             if current_line == 8 and normal_barista:
                 barista_label.config(image=normal_barista)
+                barista_label.place(
+                    x=(barista_panel_width - surprised_img.width)//2,
+                    y=(540 - text_box_height - target_height)//2
+                )
                 
             # change background when stepping inside
             if current_line == 4 and restaurant_bg:
