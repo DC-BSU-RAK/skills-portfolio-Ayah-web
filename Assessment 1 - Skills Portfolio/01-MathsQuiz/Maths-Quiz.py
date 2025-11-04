@@ -461,6 +461,31 @@ def start_easy_level():
                 return
 
             correct_answer = current_question['num1'] + current_question['num2'] if current_question['op'] == "+" else current_question['num1'] - current_question['num2']
+
+            if user_answer == correct_answer:
+                points = 10 if attempts == 0 else 5
+                score += points
+                score_label.config(text=f"Score: {score}")
+                feedback_label.config(text=f"Correct! +{points} points")
+                parent_frame.after(1000, next_question)
+            else:
+                if attempts == 0:
+                    feedback_label.config(text="Wrong! One more try!")
+                    attempts += 1
+                    # restarts timer
+                    countdown()  
+                else:
+                    feedback_label.config(text=f"Wrong again! The answer was {correct_answer}")
+                    parent_frame.after(1000, next_question)
+
+        # goes to next question
+        def next_question():
+            nonlocal question_number
+            question_number += 1
+            if question_number < max_questions:
+                displayProblem()
+            else:
+                displayResults()
     # function of starting quiz
     def start_quiz():
         # hides story box
