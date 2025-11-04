@@ -370,6 +370,14 @@ def start_easy_level():
     ]
     current_line =  0
     
+    def start_math_quiz(parent_frame):
+        score = 0
+        question_number = 0
+        max_questions = 10
+        attempts = 0
+        timer_seconds = 20
+        timer_id = None
+    
     # function of starting quiz
     def start_quiz():
         # hides story box
