@@ -299,8 +299,28 @@ def start_easy_level():
     text_box = tk.Frame(root, bg="black", height=text_box_height)
     text_box.place(x=0, y=540 - text_box_height, width=960, height=text_box_height)
     
-    mute_btn.place(x=(barista_panel_width - 40) // 2, y = 480)
-    quit_btn.place(x=(barista_panel_width - 50) // 2, y = 520)
+    story_label = tk.Label(
+        text_box,
+        text="",
+        font=("Georgia", 16),
+        fg="white",
+        bg="black",
+        wraplength=900,
+        justify="left",
+        anchor="w",
+        padx=20,
+        pady=10
+    )
+    story_label.place(x=0, y=0, width=960, height=text_box_height)
+
+    hint_label = tk.Label(
+        text_box,
+        text="Press any key to continue...",
+        font=("Georgia", 12, "italic"),
+        fg="white",
+        bg="black"
+    )
+    hint_label.place(relx=0.5, rely=0.85, anchor="center")
         
     # restaurant background
     restaurant_path = os.path.join(script_dir, "images", "restaurant.png")
