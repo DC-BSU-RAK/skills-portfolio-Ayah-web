@@ -494,6 +494,20 @@ def start_easy_level():
 
             result_frame = tk.Frame(parent_frame, bg="black")
             result_frame.place(x=0, y=0, relwidth=1, relheight=1)
+
+            # grading
+            if score >= 90:
+               result_text = f"Quiz Over! Score: {score}/100\nYou impressed the barista with an 'A' ! \n Free meal on the house."
+               img_path = os.path.join(script_dir, "images", "steak.jpg")
+            elif score >= 70:
+                result_text = f"Quiz Over! Score: {score}/100\nSafe… for now with a 'B'. The barista narrows his eyes."
+                img_path = os.path.join(script_dir, "images", "steak.jpg") 
+            elif score >= 50:
+                result_text = f"Quiz Over! Score: {score}/100\nThe barista frowns with your 'C'… try better..faster."
+                img_path = os.path.join(script_dir, "images", "poison.jpg") 
+            else:
+                result_text = f"Quiz Over! Score: {score}/100\nThe barista glares and bares his teeth... You failed with an 'F'."
+                img_path = os.path.join(script_dir, "images", "poison.jpg")
     # function of starting quiz
     def start_quiz():
         # hides story box
