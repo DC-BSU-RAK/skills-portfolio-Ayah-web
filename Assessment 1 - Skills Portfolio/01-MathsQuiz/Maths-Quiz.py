@@ -112,6 +112,15 @@ def toggle_music_for_quiz(button):
         button.config(image=muted_icon)
         print("Music muted")
 
+# resize image 
+def resize_image_keep_aspect(img_path, target_height):
+    img = Image.open(img_path)
+    w, h = img.size
+    ratio = target_height / h
+    new_width = int(w * ratio)
+    img = img.resize((new_width, target_height), Image.Resampling.LANCZOS)
+    return img
+
 #  confirmation to quit
 def quit_game():
     confirm = messagebox.askyesno("Quit Game?", "Are you sure you want to quit?")
@@ -247,16 +256,6 @@ quit_label.bind('<Button-1>', lambda e: select_difficulty("QUIT"))
 quit_label.bind('<Enter>', lambda e: on_enter(quit_label))
 quit_label.bind('<Leave>', lambda e: on_leave(quit_label))
    
-# helps with resizing image
-def resize_image_keep_aspect(img_path, target_height):
-    img = Image.open(img_path)
-    w, h = img.size
-    ratio = target_height / h
-    new_width = int(w * ratio)
-    new_height = target_height
-    img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
-    return img
-    
 # starting easy level
 def start_easy_level():
     # hides initial menu
