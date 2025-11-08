@@ -111,7 +111,6 @@ def toggle_music_for_quiz(button):
         print("Music muted")
         
 # menu
-
 # menu background colour
 bg_color = '#000008'
 
@@ -240,6 +239,14 @@ def start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bl
     timer_label = tk.Label(parent_frame, text=f"Time: {timer_seconds}",
                            font=("Georgia", 14), fg="orange", bg="#1A1A1A")
     timer_label.place(relx=0.5, rely=0.2, anchor="center")
+    
+    quit_btn = tk.Button(parent_frame, text="QUIT", font=("Georgia", 12),
+                         command=root.quit, bg="red", fg="white")
+    quit_btn.place(relx=0.95, rely=0.95, anchor="se")
+
+    mute_quiz_btn = tk.Label(parent_frame, image=unmuted_icon, cursor="hand2", bg="#1A1A1A")
+    mute_quiz_btn.place(relx=0.05, rely=0.95, anchor="sw")
+    mute_quiz_btn.bind('<Button-1>', lambda e: toggle_music(mute_quiz_btn))
 
     current_question = {}
 
@@ -360,7 +367,6 @@ def start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bl
     answer_entry.focus_set()
     
 def start_level_story():
-    
     # barista panel features and place
     barista_panel_width = 260
     right_panel = tk.Frame(root, bg="black")
@@ -368,14 +374,18 @@ def start_level_story():
 
     # load barista images
     target_height = 300
-    normal_barista_path = os.path.join(script_dir, "images", "normal_barista.png")
-    bloody_barista_path = os.path.join(script_dir, "images", "bloody_barista.png")
+    normal_barista_img = resize_image_keep_aspect(os.path.join(script_dir, "images", "normal_barista.png"), target_height)
+    normal_barista = ImageTk.PhotoImage(normal_barista_img)
     
-    # resizing images
-    normal_img = resize_image_keep_aspect(normal_barista_path, target_height)
-    normal_barista = ImageTk.PhotoImage(normal_img)
-    bloody_img = resize_image_keep_aspect(bloody_barista_path, target_height)
-    bloody_barista = ImageTk.PhotoImage(bloody_img)
+    bloody_barista_img = resize_image_keep_aspect(os.path.join(script_dir, "images", "bloody_barista.png"), target_height)
+    bloody_barista = ImageTk.PhotoImage(bloody_barista_img)
+    
+    surprised_barista_img = resize_image_keep_aspect(os.path.join(script_dir, "images", "surprised_barista.png"), target_height)
+    surprised_barista = ImageTk.PhotoImage(surprised_barista_img)
+
+    # load restaurant image
+    restaurant_bg_img = Image.open(os.path.join(script_dir, "images", "restaurant_bg.png")).resize((960, 540))
+    restaurant_bg = ImageTk.PhotoImage(restaurant_bg_img)
     
     # barista label
     barista_label = tk.Label(right_panel, bg="black")
