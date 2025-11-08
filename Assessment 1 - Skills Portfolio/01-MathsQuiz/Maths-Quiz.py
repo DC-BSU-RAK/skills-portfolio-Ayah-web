@@ -326,6 +326,33 @@ def start_level_story():
     normal_barista = ImageTk.PhotoImage(normal_img)
     bloody_img = resize_image_keep_aspect(bloody_barista_path, target_height)
     bloody_barista = ImageTk.PhotoImage(bloody_img)
+    
+    # barista label
+    barista_label = tk.Label(right_panel, bg="black")
+    barista_label.place_forget()
+
+    # text box for dialogue
+    text_box_height = 180
+    text_box = tk.Frame(root, bg="black", height=text_box_height)
+    text_box.place(x=0, y=540 - text_box_height, width=960, height=text_box_height)
+    story_label = tk.Label(text_box, text="", font=("Georgia", 16), fg="white", bg="black",
+                           wraplength=900, justify="left", anchor="w", padx=20, pady=10)
+    story_label.place(x=0, y=0, width=960, height=text_box_height)
+
+    # story lines
+    story_lines = [
+        "It’s raining hard tonight. It's weird though, weather forecast didn't mention anything this morning.",
+        "I should’ve brought an umbrella at least. Great.",
+        "There’s a small restaurant across the street. Warm light inside, maybe they’re still open?",
+        "‘Le Charne’. Must be new...",
+        "As I step inside, the smell of wine and something… metallic hits me.",
+        "The place feels cozy though! The candlelight, drinks, and soft jazz. The storm fades away outside.",
+        "A man behind the counter looks up, startled. His sleeves are damp… is that—?",
+        "‘Ah, welcome!’ he smiles too quickly as he notices me stare at his mouth and shirt. ‘Pomegranate juice. Messy fruit eh?’ he chuckles.",
+        "‘You’ve come at the perfect time stranger,’ he adds. ‘I’ll serve you a drink and meal on the house...if you can solve a few numerical curiosities.’",
+        "He leans in, eyes ruby red with a glimmer. ‘Shall we begin?’"
+    ]
+    current_line = 0
 
 # menu
 def displayMenu():
