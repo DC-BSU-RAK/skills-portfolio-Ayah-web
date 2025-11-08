@@ -373,6 +373,16 @@ def start_level_story():
 
     root.bind("<Key>", next_line)
     next_line()
+
+def start_moderate_level():
+    game_state['difficulty'] = "MODERATE"
+    start_level_story()
+
+def start_advanced_level():
+    game_state['difficulty'] = "ADVANCED"
+    start_level_story()
+
+
 # menu
 def displayMenu():
     
