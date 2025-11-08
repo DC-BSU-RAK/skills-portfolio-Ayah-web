@@ -84,6 +84,13 @@ def stop_gif():
     global frames
     frames = []
     
+# load mute/unmute images
+unmuted_path = os.path.join(script_dir, "images", "unmuted.png")
+muted_path = os.path.join(script_dir, "images", "muted.png")
+
+unmuted_icon = ImageTk.PhotoImage(Image.open(unmuted_path).resize((40, 40)))
+muted_icon = ImageTk.PhotoImage(Image.open(muted_path).resize((40, 40)))
+    
 # mute button
 def toggle_music():
     if game_state['music_muted']:
@@ -96,6 +103,10 @@ def toggle_music():
         game_state['music_muted'] = True
         mute_btn.config(image=muted_icon)
         print("Music muted")
+        
+mute_btn = tk.Label(root, image=unmuted_icon, cursor="hand2", bg="#000008")
+mute_btn.place(x=900, y=480)
+mute_btn.bind("<Button-1>", lambda e: toggle_music())
         
 # separate mute button for when math quiz starts
 def toggle_music_for_quiz(button):
@@ -138,8 +149,7 @@ menu_items = [
 for lbl, difficulty in menu_items:
     lbl.bind('<Enter>', lambda e, l=lbl: on_enter(l))
     lbl.bind('<Leave>', lambda e, l=lbl: on_leave(l))
-    lbl.bind('<Button-1>', lambda e, d=difficulty: select_difficulty(d))
-
+    
 def displayMenu():
     easy_label.place(x=50, y=200)
     moderate_label.place(x=50, y=260)
@@ -157,7 +167,6 @@ def select_difficulty(difficulty):
     else:
         game_state['difficulty'] = difficulty
         hide_menu()
-        start_level_story()        
 
 # resize image 
 def resize_image_keep_aspect(img_path, target_height):
@@ -327,19 +336,19 @@ def start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bl
         target_height = 300
 
         if score >= 90:
-            result_text = f"Score: {score}/100\nYou impressed the barista with an 'A'!"
+            result_text = f"Score: {score}/100\nYou impressed the barista with an 'A'! \n Free meal on the house."
             img_path = os.path.join(script_dir, "images", "steak.jpg")
             barista_label.config(image=normal_barista)
         elif score >= 70:
-            result_text = f"Score: {score}/100\nSafe for now… The barista narrows his eyes."
+            result_text = f"Score: {score}/100\nSafe for now... with a 'B'. The barista narrows his eyes."
             img_path = os.path.join(script_dir, "images", "steak.jpg")
             barista_label.config(image=normal_barista)
         elif score >= 50:
-            result_text = f"Score: {score}/100\nThe barista frowns… barely acceptable."
+            result_text = f"Score: {score}/100\nThe barista frowns with your 'C'… Barely acceptable."
             img_path = os.path.join(script_dir, "images", "poison.jpg")
             barista_label.config(image=normal_barista)
         else:
-            result_text = f"Score: {score}/100\nThe barista glares… you failed!"
+            result_text = f"Score: {score}/100\nThe barista glares and bares his teeth… You failed with an 'F'!"
             img_path = os.path.join(script_dir, "images", "poison.jpg")
             barista_label.config(image=bloody_barista)
 
@@ -426,6 +435,22 @@ def start_level_story():
         nonlocal current_line
         if current_line < len(story_lines):
             story_label.config(text=story_lines[current_line])
+            
+            # barista expression changes
+            if current_line == 6:
+                barista_label.config(image=surprised_barista)
+                barista_label.place(x=(barista_panel_width - surprised_barista_img.width)//2,
+                                    y=(540 - text_box_height - target_height)//2)
+            if current_line == 8:
+                barista_label.config(image=normal_barista)
+                barista_label.place(x=(barista_panel_width - normal_barista_img.width)//2,
+                                    y=(540 - text_box_height - target_height)//2)
+
+            # background change
+            if current_line == 4:
+                stop_gif()
+                bg_label.config(image=restaurant_bg)
+                bg_label.image = restaurant_bg
         else:
             root.unbind("<Key>")
             start_quiz()
