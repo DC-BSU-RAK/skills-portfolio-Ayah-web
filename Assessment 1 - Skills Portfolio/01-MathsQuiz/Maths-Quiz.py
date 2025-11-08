@@ -160,15 +160,14 @@ def displayMenu():
 def hide_menu():
     for lbl in [easy_label, moderate_label, advanced_label, quit_label]:
         lbl.place_forget()
-
+        
 def select_difficulty(difficulty):
     if difficulty == "QUIT":
-        root.quit()
+        quit_game()
     else:
         game_state['difficulty'] = difficulty
         hide_menu()
-        stop_gif()
-        start_level_story()  
+        start_level_story()
         
 for lbl, difficulty in menu_items:
     lbl.bind('<Button-1>', lambda e, d=difficulty: select_difficulty(d))      
@@ -255,7 +254,7 @@ def start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bl
     timer_label.place(relx=0.5, rely=0.2, anchor="center")
     
     quit_btn = tk.Button(parent_frame, text="QUIT", font=("Georgia", 12),
-                         command=root.quit, bg="red", fg="white")
+                         command=quit_game, bg="red", fg="white")
     quit_btn.place(relx=0.95, rely=0.95, anchor="se")
 
     mute_quiz_btn = tk.Label(parent_frame, image=unmuted_icon, cursor="hand2", bg="#1A1A1A")
@@ -400,6 +399,9 @@ def start_level_story():
     # load restaurant image
     restaurant_bg_img = Image.open(os.path.join(script_dir, "images", "restaurant.png")).resize((960, 540))
     restaurant_bg = ImageTk.PhotoImage(restaurant_bg_img)
+    
+    bg_label.config(image=restaurant_bg)
+    bg_label.image = restaurant_bg
     
     # barista label
     barista_label = tk.Label(right_panel, bg="black")
