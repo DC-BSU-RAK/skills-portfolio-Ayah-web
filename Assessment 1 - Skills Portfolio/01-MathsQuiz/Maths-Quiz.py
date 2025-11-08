@@ -109,6 +109,56 @@ def toggle_music_for_quiz(button):
         game_state['music_muted'] = True
         button.config(image=muted_icon)
         print("Music muted")
+        
+# menu
+
+# menu background colour
+bg_color = '#000008'
+
+# labels shown in main menu
+easy_label = tk.Label(root, text="EASY", font=('Georgia',28), fg='white', cursor='hand2', bg=bg_color)
+moderate_label = tk.Label(root, text="MODERATE", font=('Georgia',28), fg='white', cursor='hand2', bg=bg_color)
+advanced_label = tk.Label(root, text="ADVANCED", font=('Georgia',28), fg='white', cursor='hand2', bg=bg_color)
+quit_label = tk.Label(root, text="QUIT", font=('Georgia',28), fg='white', cursor='hand2', bg=bg_color)
+
+# hover effect
+def on_enter(label):
+    label.config(fg="#E71C1C", font=('Georgia',30,'bold'))
+
+def on_leave(label):
+    label.config(fg='white', font=('Georgia',28))
+
+# items in menu
+menu_items = [
+    (easy_label, "EASY"),
+    (moderate_label, "MODERATE"),
+    (advanced_label, "ADVANCED"),
+    (quit_label, "QUIT")
+]
+
+for lbl, difficulty in menu_items:
+    lbl.bind('<Enter>', lambda e, l=lbl: on_enter(l))
+    lbl.bind('<Leave>', lambda e, l=lbl: on_leave(l))
+    lbl.bind('<Button-1>', lambda e, d=difficulty: select_difficulty(d))
+
+def displayMenu():
+    easy_label.place(x=50, y=200)
+    moderate_label.place(x=50, y=260)
+    advanced_label.place(x=50, y=320)
+    quit_label.place(x=50, y=380)
+    game_state['difficulty'] = None
+
+def hide_menu():
+    for lbl in [easy_label, moderate_label, advanced_label, quit_label]:
+        lbl.place_forget()
+
+def select_difficulty(difficulty):
+    if difficulty == "QUIT":
+        root.quit()
+    else:
+        game_state['difficulty'] = difficulty
+        hide_menu()
+        start_level_story()        
 
 # resize image 
 def resize_image_keep_aspect(img_path, target_height):
@@ -373,10 +423,8 @@ def start_level_story():
 
     root.bind("<Key>", next_line)
     next_line()
-    
-# calling function
-def start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bloody_barista):
-    pass
-
+ 
+# calling function to display main menu
+displayMenu()
 
 root.mainloop()
