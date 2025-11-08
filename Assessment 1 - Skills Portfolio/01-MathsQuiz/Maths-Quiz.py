@@ -22,8 +22,6 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # quiz state tracking
 game_state = {
-    'easy_completed': False,
-    'medium_completed': False,
     'music_muted': False,
     'difficulty': None,
     'score': 0
