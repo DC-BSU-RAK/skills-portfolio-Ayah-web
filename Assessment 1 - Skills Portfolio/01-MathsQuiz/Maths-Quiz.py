@@ -167,6 +167,11 @@ def select_difficulty(difficulty):
     else:
         game_state['difficulty'] = difficulty
         hide_menu()
+        stop_gif()
+        start_level_story()  
+        
+for lbl, difficulty in menu_items:
+    lbl.bind('<Button-1>', lambda e, d=difficulty: select_difficulty(d))      
 
 # resize image 
 def resize_image_keep_aspect(img_path, target_height):
@@ -393,7 +398,7 @@ def start_level_story():
     surprised_barista = ImageTk.PhotoImage(surprised_barista_img)
 
     # load restaurant image
-    restaurant_bg_img = Image.open(os.path.join(script_dir, "images", "restaurant_bg.png")).resize((960, 540))
+    restaurant_bg_img = Image.open(os.path.join(script_dir, "images", "restaurant.png")).resize((960, 540))
     restaurant_bg = ImageTk.PhotoImage(restaurant_bg_img)
     
     # barista label
