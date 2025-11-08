@@ -17,6 +17,9 @@ root.geometry('960x540')
 root.resizable(False, False)
 root.configure(bg='#000008')
 
+# get folder of the script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 # quiz state tracking
 game_state = {
     'easy_completed': False,
@@ -25,9 +28,6 @@ game_state = {
     'difficulty': None,
     'score': 0
 }
-
-# get folder of the script
-script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # load and play background music
 try:
