@@ -154,6 +154,163 @@ try:
 except Exception as e:
     print(f"Error loading mute icons: {e}")
 
+# math quiz function
+
+def start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bloody_barista):
+    score = 0
+    question_number = 0
+    max_questions = 10
+    attempts = 0
+    timer_seconds = 20
+    timer_id = None
+
+    diff = game_state['difficulty']
+    if diff == "EASY":
+        min_val, max_val, timer_seconds = 1, 9, 20
+    elif diff == "MODERATE":
+        min_val, max_val, timer_seconds = 10, 99, 15
+    # advanced
+    else:
+        min_val, max_val, timer_seconds = 100, 999, 10
+
+    # labels
+    score_label = tk.Label(parent_frame, text=f"Score: {score}", font=("Georgia", 14),
+                           fg="lightgreen", bg="#1A1A1A")
+    score_label.place(relx=0.85, rely=0.05, anchor="center")
+
+    question_label = tk.Label(parent_frame, text="", font=("Georgia", 18),
+                              fg="#E7CBA9", bg="#1A1A1A")
+    question_label.place(relx=0.5, rely=0.3, anchor="center")
+
+    answer_entry = tk.Entry(parent_frame, font=("Georgia", 16))
+    answer_entry.place(relx=0.5, rely=0.5, anchor="center")
+
+    feedback_label = tk.Label(parent_frame, text="", font=("Georgia", 14),
+                              fg="yellow", bg="#1A1A1A")
+    feedback_label.place(relx=0.5, rely=0.6, anchor="center")
+
+    timer_label = tk.Label(parent_frame, text=f"Time: {timer_seconds}",
+                           font=("Georgia", 14), fg="orange", bg="#1A1A1A")
+    timer_label.place(relx=0.5, rely=0.2, anchor="center")
+
+    current_question = {}
+
+    # random integer
+    def randomInt(): return random.randint(min_val, max_val)
+    
+    # decides the operation between addition and subtraction
+    def decideOperation(): return random.choice(["+", "-"])
+
+    # function for timer countdown
+    def countdown():
+        nonlocal timer_seconds, timer_id
+        timer_label.config(text=f"Time: {timer_seconds}")
+        if timer_seconds > 0:
+            timer_seconds -= 1
+            timer_id = parent_frame.after(1000, countdown)
+        else:
+            feedback_label.config(text="Time's up! 0 points")
+            parent_frame.after(1000, next_question)
+
+    # function for displaying all the elements when a problem is shown
+    def displayProblem():
+        nonlocal current_question, attempts, timer_seconds, timer_id
+        attempts = 0
+        timer_seconds = 20
+        if timer_id: parent_frame.after_cancel(timer_id)
+        countdown()
+
+        num1, num2, op = randomInt(), randomInt(), decideOperation()
+        current_question = {"num1": num1, "num2": num2, "op": op}
+        question_label.config(text=f"{num1} {op} {num2} =")
+        answer_entry.delete(0, END)
+        feedback_label.config(text="")
+
+    # function for answer handling
+    def isCorrect(event=None):
+        nonlocal score, question_number, attempts, timer_id
+        if timer_id: parent_frame.after_cancel(timer_id)
+        try:
+            user_answer = int(answer_entry.get())
+        except ValueError:
+            feedback_label.config(text="Enter a valid number!")
+            countdown()
+            return
+
+        # appointing points according to attempt at problem
+        correct_answer = current_question['num1'] + current_question['num2'] if current_question['op'] == "+" else current_question['num1'] - current_question['num2']
+        if user_answer == correct_answer:
+            points = 10 if attempts == 0 else 5
+            score += points
+            score_label.config(text=f"Score: {score}")
+            feedback_label.config(text=f"Correct! +{points} points")
+            parent_frame.after(1000, next_question)
+        else:
+            if attempts == 0:
+                feedback_label.config(text="Wrong! One more try!")
+                attempts += 1
+                countdown()
+            else:
+                feedback_label.config(text=f"Wrong again! The answer was {correct_answer}")
+                parent_frame.after(1000, next_question)
+
+    # function for next question
+    def next_question():
+        nonlocal question_number
+        question_number += 1
+        if question_number < max_questions:
+            displayProblem()
+        else:
+            displayResults()
+
+    # function of displaying results according to score of player
+    def displayResults():
+        for widget in parent_frame.winfo_children():
+            widget.destroy()
+        result_frame = tk.Frame(parent_frame, bg="black")
+        result_frame.place(x=0, y=0, relwidth=1, relheight=1)
+        target_height = 300
+
+        if score >= 90:
+            result_text = f"Score: {score}/100\nYou impressed the barista with an 'A'!"
+            img_path = os.path.join(script_dir, "images", "steak.jpg")
+            barista_label.config(image=normal_barista)
+        elif score >= 70:
+            result_text = f"Score: {score}/100\nSafe for now… The barista narrows his eyes."
+            img_path = os.path.join(script_dir, "images", "steak.jpg")
+            barista_label.config(image=normal_barista)
+        elif score >= 50:
+            result_text = f"Score: {score}/100\nThe barista frowns… barely acceptable."
+            img_path = os.path.join(script_dir, "images", "poison.jpg")
+            barista_label.config(image=normal_barista)
+        else:
+            result_text = f"Score: {score}/100\nThe barista glares… you failed!"
+            img_path = os.path.join(script_dir, "images", "poison.jpg")
+            barista_label.config(image=bloody_barista)
+
+        try:
+            result_img = Image.open(img_path).resize((300, 300))
+            result_photo = ImageTk.PhotoImage(result_img)
+            tk.Label(result_frame, image=result_photo, bg="black").place(relx=0.5, rely=0.4, anchor="center")
+            result_frame.image = result_photo
+        except: pass
+
+        tk.Label(result_frame, text=result_text, font=("Georgia", 18),
+                 fg="#E7CBA9", bg="black", justify="center").place(relx=0.5, rely=0.75, anchor="center")
+
+        tk.Button(result_frame, text="Play Again", font=("Georgia", 14),
+                  command=lambda: replay_quiz(parent_frame)).place(relx=0.5, rely=0.9, anchor="center")
+
+    # function of replaying quiz after clicking the play again button
+    def replay_quiz(parent_frame):
+        for widget in parent_frame.winfo_children():
+            widget.destroy()
+        start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bloody_barista)
+
+    answer_entry.bind("<Return>", isCorrect)
+    displayProblem()
+    answer_entry.focus_set()
+
 # menu
 def displayMenu():
     
