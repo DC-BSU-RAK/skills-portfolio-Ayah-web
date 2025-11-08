@@ -126,14 +126,6 @@ def quit_game():
     confirm = messagebox.askyesno("Quit Game?", "Are you sure you want to quit?")
     if confirm:
         root.quit()
-        
-# mute label
-# mute_btn = tk.Label(root, text="MUTE", font=('Georgia', 16, 'bold'), fg="white",
-                    # bg=bg_color, cursor='hand2')
-# mute_btn.place(x=900, y=485)
-# mute_btn.bind('<Button-1>', lambda e: toggle_music())
-# mute_btn.bind('<Enter>', lambda e: mute_btn.config(fg="#E71C1C"))
-# mute_btn.bind('<Leave>', lambda e: mute_btn.config(fg="white"))
 
 # load mute/unmute icons
 try:
