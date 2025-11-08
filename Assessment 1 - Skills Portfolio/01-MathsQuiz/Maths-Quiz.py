@@ -308,6 +308,24 @@ def start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bl
     answer_entry.bind("<Return>", isCorrect)
     displayProblem()
     answer_entry.focus_set()
+    
+def start_level_story():
+    
+    # barista panel features and place
+    barista_panel_width = 260
+    right_panel = tk.Frame(root, bg="black")
+    right_panel.place(x=960 - barista_panel_width, y=0, width=barista_panel_width, height=540)
+
+    # load barista images
+    target_height = 300
+    normal_barista_path = os.path.join(script_dir, "images", "normal_barista.png")
+    bloody_barista_path = os.path.join(script_dir, "images", "bloody_barista.png")
+    
+    # resizing images
+    normal_img = resize_image_keep_aspect(normal_barista_path, target_height)
+    normal_barista = ImageTk.PhotoImage(normal_img)
+    bloody_img = resize_image_keep_aspect(bloody_barista_path, target_height)
+    bloody_barista = ImageTk.PhotoImage(bloody_img)
 
 # menu
 def displayMenu():
