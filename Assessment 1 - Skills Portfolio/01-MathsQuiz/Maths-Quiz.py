@@ -354,6 +354,25 @@ def start_level_story():
     ]
     current_line = 0
 
+    # function for starting quiz
+    def start_quiz():
+        text_box.place_forget()
+        quiz_frame = tk.Frame(root, bg="#1A1A1A", highlightbackground="#B19775", highlightthickness=3)
+        quiz_frame.place(x=0, y=0, width=960 - barista_panel_width, height=540)
+        start_math_quiz(quiz_frame, right_panel, barista_label, normal_barista, bloody_barista)
+
+    # function to start next line
+    def next_line(event=None):
+        nonlocal current_line
+        if current_line < len(story_lines):
+            story_label.config(text=story_lines[current_line])
+        else:
+            root.unbind("<Key>")
+            start_quiz()
+        current_line += 1
+
+    root.bind("<Key>", next_line)
+    next_line()
 # menu
 def displayMenu():
     
