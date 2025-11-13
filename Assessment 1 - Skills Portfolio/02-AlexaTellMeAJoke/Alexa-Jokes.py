@@ -114,3 +114,11 @@ class AlexaJokeApp:
             except Exception as e:
                 print(f"Error loading {name} GIF: {e}")
                 self.gif_frames[name] = []
+    
+    def show_opening_animation(self):
+        # show the opening animation once, then switch to main interfac
+        self.current_gif_label = Label(self.root, bg="black")
+        self.current_gif_label.place(x=0, y=0, width=960, height=540)
+        
+        self.current_frame_index = 0
+        self.play_gif_once('opening', self.create_main_interface)
