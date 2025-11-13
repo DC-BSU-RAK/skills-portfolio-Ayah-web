@@ -69,3 +69,12 @@ class AlexaJokeApp:
             jokes = [("Why did the chicken cross the road?", "To get to the other side.")]
             
         return jokes
+    
+    def load_all_gifs(self):
+        # load all GIF animations
+        gif_files = {
+            'opening': 'alexa_opening.gif',
+            'listening': 'alexa_listening.gif',
+            'loading': 'alexa_loading.gif',
+            'speaking': 'alexa_speaking.gif'
+        }
