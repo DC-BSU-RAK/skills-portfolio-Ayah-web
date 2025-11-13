@@ -40,3 +40,23 @@ class AlexaJokeApp:
         
         # show opening animation
         self.show_opening_animation()
+    
+    def load_jokes(self):
+        # load jokes from the randomJokes.txt file
+        jokes = []
+        try:
+            parent_dir = os.path.dirname(self.script_dir)
+            file_path = os.path.join(parent_dir, "A1 - Resources", "randomJokes.txt")
+            
+            print(f"Looking for jokes file at: {file_path}")
+            
+            with open(file_path, 'r', encoding='utf-8') as file:
+                for line in file:
+                    line = line.strip()
+                    if line and '?' in line:
+                        parts = line.split('?', 1)
+                        setup = parts[0].strip() + '?'
+                        punchline = parts[1].strip()
+                        jokes.append((setup, punchline))
+            
+            print(f"Successfully loaded {len(jokes)} jokes.")
