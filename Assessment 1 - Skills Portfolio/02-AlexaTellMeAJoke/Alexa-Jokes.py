@@ -80,3 +80,37 @@ class AlexaJokeApp:
         }
         
         gifs_dir = os.path.join(self.script_dir, 'gifs')
+        
+        for name, filename in gif_files.items():
+            try:
+                gif_path = os.path.join(gifs_dir, filename)
+                print(f"Loading {name} GIF from: {gif_path}")
+                
+                img = Image.open(gif_path)
+                frames = []
+                for frame in ImageSequence.Iterator(img):
+                    frame = frame.copy()
+                    if name == 'opening':
+                        frame = frame.resize((960, 540), Image.Resampling.LANCZOS)
+                    elif name == 'speaking':
+                        # resize speaking gif 
+                        frame = frame.resize((200, 200), Image.Resampling.LANCZOS)
+                    elif name == 'loading':
+                        # get original dimensions
+                        orig_width, orig_height = frame.size
+                        # calculate aspect ratio
+                        aspect_ratio = orig_width / orig_height
+                        
+                        # target height
+                        target_height = 190
+                        target_width = int(target_height * aspect_ratio)
+                        
+                        # resize maintaining aspect ratio
+                        frame = frame.resize((target_width, target_height), Image.Resampling.LANCZOS)
+                    frames.append(ImageTk.PhotoImage(frame))
+                self.gif_frames[name] = frames
+                print(f"Successfully loaded {name} GIF with {len(frames)} frames")
+                
+            except Exception as e:
+                print(f"Error loading {name} GIF: {e}")
+                self.gif_frames[name] = []
