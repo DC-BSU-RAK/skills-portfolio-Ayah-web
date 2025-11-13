@@ -60,3 +60,12 @@ class AlexaJokeApp:
                         jokes.append((setup, punchline))
             
             print(f"Successfully loaded {len(jokes)} jokes.")
+            
+        except FileNotFoundError:
+            print(f"Error: Could not find randomJokes.txt at {file_path}")
+            jokes = [("Why did the chicken cross the road?", "To get to the other side.")]
+        except Exception as e:
+            print(f"Error loading jokes: {e}")
+            jokes = [("Why did the chicken cross the road?", "To get to the other side.")]
+            
+        return jokes
