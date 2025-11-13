@@ -78,3 +78,5 @@ class AlexaJokeApp:
             'loading': 'alexa_loading.gif',
             'speaking': 'alexa_speaking.gif'
         }
+        
+        gifs_dir = os.path.join(self.script_dir, 'gifs')
