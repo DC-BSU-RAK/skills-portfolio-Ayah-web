@@ -197,3 +197,50 @@ class AlexaJokeApp:
         # button spacing and positioning
         button_spacing = 280
         center_x = 480
+        
+        # tell me a joke button only shown initially
+        joke_x = center_x
+        self.joke_button = self.create_button(
+            self.joke_button_img,
+            lambda: self.button_click_effect(self.joke_button, self.tell_joke),
+            joke_x,
+            button_y,
+            "Alexa tell me a Joke"
+        )
+        self.button_positions[self.joke_button] = (joke_x, button_y)
+        
+        # show punchline button 
+        punchline_x = center_x - button_spacing // 2
+        self.punchline_button = self.create_button(
+            self.punchline_button_img,
+            lambda: self.button_click_effect(self.punchline_button, self.show_punchline),
+            punchline_x,
+            button_y,
+            "Show Punchline"
+        )
+        self.button_positions[self.punchline_button] = (punchline_x, button_y)
+        self.punchline_button.place_forget()  
+        
+        # next joke button 
+        next_x = center_x + button_spacing // 2
+        self.next_button = self.create_button(
+            self.next_button_img,
+            lambda: self.button_click_effect(self.next_button, self.next_joke),
+            next_x,
+            button_y,
+            "Next Joke"
+        )
+        self.button_positions[self.next_button] = (next_x, button_y)
+        self.next_button.place_forget()  
+        
+        # quit button 
+        quit_x = 880
+        quit_y = 50
+        self.quit_button = self.create_button(
+            self.quit_button_img,
+            lambda: self.button_click_effect(self.quit_button, self.root.quit),
+            quit_x,
+            quit_y,
+            "Quit"
+        )
+        self.button_positions[self.quit_button] = (quit_x, quit_y)
