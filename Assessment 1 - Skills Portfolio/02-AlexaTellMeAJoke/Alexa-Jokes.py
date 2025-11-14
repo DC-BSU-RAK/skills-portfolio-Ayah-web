@@ -264,3 +264,9 @@ class AlexaJokeApp:
             
             print("Successfully loaded all button images!")
             
+        except Exception as e:
+            print(f"Error loading button images: {e}")
+            self.joke_button_img = None
+            self.punchline_button_img = None
+            self.next_button_img = None
+            self.quit_button_img = None
