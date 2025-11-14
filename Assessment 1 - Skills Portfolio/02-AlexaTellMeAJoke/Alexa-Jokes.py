@@ -131,3 +131,25 @@ class AlexaJokeApp:
             return
         
         frames = self.gif_frames[gif_name]
+        
+        def animate():
+            if self.current_frame_index < len(frames):
+                self.current_gif_label.configure(image=frames[self.current_frame_index])
+                self.current_frame_index += 1
+                self.animation_id = self.root.after(50, animate)
+            else:
+                if callback:
+                    callback()
+        
+        self.current_frame_index = 0
+        animate()
+    
+    def play_gif_loop(self, gif_name):
+        # play a GIF animation in a loop
+        if self.animation_id:
+            self.root.after_cancel(self.animation_id)
+        
+        if gif_name not in self.gif_frames or not self.gif_frames[gif_name]:
+            return
+        
+        frames = self.gif_frames[gif_name]
