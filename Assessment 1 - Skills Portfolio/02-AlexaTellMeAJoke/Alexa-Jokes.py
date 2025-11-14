@@ -244,3 +244,23 @@ class AlexaJokeApp:
             "Quit"
         )
         self.button_positions[self.quit_button] = (quit_x, quit_y)
+    
+    def load_button_images(self):
+        # load button images
+        images_dir = os.path.join(self.script_dir, 'images')
+        
+        try:
+            joke_path = os.path.join(images_dir, 'joke_button.png')
+            punchline_path = os.path.join(images_dir, 'punchline_button.png')
+            next_path = os.path.join(images_dir, 'next_joke_button.png')
+            quit_path = os.path.join(images_dir, 'quit_button.png')
+            
+            print(f"Loading button images from: {images_dir}")
+            
+            self.joke_button_img = ImageTk.PhotoImage(Image.open(joke_path))
+            self.punchline_button_img = ImageTk.PhotoImage(Image.open(punchline_path))
+            self.next_button_img = ImageTk.PhotoImage(Image.open(next_path))
+            self.quit_button_img = ImageTk.PhotoImage(Image.open(quit_path))
+            
+            print("Successfully loaded all button images!")
+            
