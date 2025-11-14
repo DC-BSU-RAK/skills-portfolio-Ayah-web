@@ -321,3 +321,17 @@ class AlexaJokeApp:
             
             # schedule scale up after 50ms
             self.root.after(50, scale_up)
+        
+        # scale up effect (return to normal)
+        def scale_up():
+            # reset button to normal state
+            button.config(width=0, height=0)  
+            
+            # ensure button is at correct position
+            button.place(x=original_x, y=original_y, anchor="center")
+            
+            # execute callback
+            callback()
+        
+        # start animation
+        scale_down()
