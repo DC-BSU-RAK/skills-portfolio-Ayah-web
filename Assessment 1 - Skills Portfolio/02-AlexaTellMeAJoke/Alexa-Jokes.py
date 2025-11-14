@@ -414,3 +414,8 @@ class AlexaJokeApp:
         
         # after a brief delay, show the setup
         self.root.after(1500, self.display_setup)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = AlexaJokeApp(root)
+    root.mainloop()
