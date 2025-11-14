@@ -298,3 +298,26 @@ class AlexaJokeApp:
             )
         button.place(x=x, y=y, anchor="center")
         return button
+    
+    def button_click_effect(self, button, callback):
+        # create a button click effect with scale animation
+        # get original position from stored positions
+        if button not in self.button_positions:
+            return
+        
+        original_x, original_y = self.button_positions[button]
+        
+        # scale down effect 
+        def scale_down():
+            current_width = button.winfo_width()
+            current_height = button.winfo_height()
+            
+            # reduce size by 10%
+            new_width = int(current_width * 0.9)
+            new_height = int(current_height * 0.9)
+            
+            # update button configuration to appear smaller
+            button.config(width=new_width, height=new_height, compound="center")
+            
+            # schedule scale up after 50ms
+            self.root.after(50, scale_up)
