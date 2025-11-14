@@ -153,3 +153,25 @@ class AlexaJokeApp:
             return
         
         frames = self.gif_frames[gif_name]
+        
+        def animate():
+            if self.current_gif_label:
+                frame = frames[self.current_frame_index % len(frames)]
+                self.current_gif_label.configure(image=frame)
+                self.current_frame_index += 1
+                self.animation_id = self.root.after(50, animate)
+        
+        self.current_frame_index = 0
+        animate()
+    
+    def create_main_interface(self):
+        # create main interface with buttons and alexa GIF
+        if self.current_gif_label:
+            self.current_gif_label.destroy()
+        
+        # create alexa GIF label 
+        self.current_gif_label = Label(self.root, bg="black")
+        self.current_gif_label.place(x=480, y=150, anchor="center")
+        
+        # start with listening animation
+        self.play_gif_loop('listening')
