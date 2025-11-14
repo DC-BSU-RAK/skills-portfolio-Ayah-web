@@ -360,3 +360,21 @@ class AlexaJokeApp:
         
         # after a delay, show the setup
         self.root.after(1500, self.display_setup)
+    
+    def display_setup(self):
+        # display the joke setup
+        # change to speaking animation
+        self.play_gif_loop('speaking')
+        
+        # show the setup
+        self.joke_text.config(text=self.current_setup)
+        
+        # show punchline and next joke buttons
+        punchline_x, punchline_y = self.button_positions[self.punchline_button]
+        next_x, next_y = self.button_positions[self.next_button]
+        
+        self.punchline_button.place(x=punchline_x, y=punchline_y, anchor="center")
+        self.punchline_button.config(state="normal")
+        
+        self.next_button.place(x=next_x, y=next_y, anchor="center")
+        self.next_button.config(state="disabled")
