@@ -378,3 +378,39 @@ class AlexaJokeApp:
         
         self.next_button.place(x=next_x, y=next_y, anchor="center")
         self.next_button.config(state="disabled")
+    
+    def show_punchline(self):
+        # Show the punchline
+        if not self.showing_punchline:
+            self.showing_punchline = True
+            
+            # add punchline to the display
+            full_text = f"{self.current_setup}\n\n{self.current_punchline}"
+            self.joke_text.config(text=full_text)
+            
+            # enable next joke button, disable punchline button
+            self.punchline_button.config(state="disabled")
+            self.next_button.config(state="normal")
+    
+    def next_joke(self):
+        # tell the next joke
+        if not self.jokes:
+            self.joke_text.config(text="No jokes available!")
+            return
+        
+        # select random joke
+        self.current_joke = random.choice(self.jokes)
+        self.current_setup, self.current_punchline = self.current_joke
+        self.showing_punchline = False
+        
+        # clear text
+        self.joke_text.config(text="")
+        
+        # change to loading animation
+        self.play_gif_loop('loading')
+        
+        # sisable next button temporarily
+        self.next_button.config(state="disabled")
+        
+        # after a brief delay, show the setup
+        self.root.after(1500, self.display_setup)
