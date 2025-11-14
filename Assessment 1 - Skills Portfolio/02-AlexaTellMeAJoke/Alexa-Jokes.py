@@ -175,3 +175,25 @@ class AlexaJokeApp:
         
         # start with listening animation
         self.play_gif_loop('listening')
+        
+        # create text label for joke display 
+        self.joke_text = Label(
+            self.root,
+            text="",
+            font=("Arial", 14, "bold"),
+            bg="black",
+            fg="white",
+            wraplength=800,
+            justify="center"
+        )
+        self.joke_text.place(x=480, y=320, anchor="center")
+        
+        # load button images
+        self.load_button_images()
+        
+        # create buttons at the bottom -
+        button_y = 480
+        
+        # button spacing and positioning
+        button_spacing = 280
+        center_x = 480
