@@ -9,7 +9,7 @@ import os
 class AlexaJokeApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Alexa Joke Teller")
+        self.root.title("Alexa - Joke Assistant")
         self.root.geometry("960x540")
         self.root.resizable(False, False)
         self.root.configure(bg="black")
@@ -122,3 +122,12 @@ class AlexaJokeApp:
         
         self.current_frame_index = 0
         self.play_gif_once('opening', self.create_main_interface)
+    
+    def play_gif_once(self, gif_name, callback=None):
+        # play a GIF animation once and then execute callback
+        if gif_name not in self.gif_frames or not self.gif_frames[gif_name]:
+            if callback:
+                callback()
+            return
+        
+        frames = self.gif_frames[gif_name]
