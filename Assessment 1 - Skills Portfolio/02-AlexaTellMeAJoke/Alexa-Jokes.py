@@ -335,3 +335,28 @@ class AlexaJokeApp:
         
         # start animation
         scale_down()
+    
+    def tell_joke(self):
+        # tell a random joke
+        if not self.jokes:
+            self.joke_text.config(text="No jokes available!")
+            return
+        
+        # select random joke
+        self.current_joke = random.choice(self.jokes)
+        self.current_setup, self.current_punchline = self.current_joke
+        self.showing_punchline = False
+        
+        # clear text
+        self.joke_text.config(text="")
+        
+        # change to loading animation
+        self.play_gif_loop('loading')
+        
+        # hide "Tell me a joke" button after first use
+        if self.first_joke:
+            self.first_joke = False
+            self.joke_button.place_forget()
+        
+        # after a delay, show the setup
+        self.root.after(1500, self.display_setup)
