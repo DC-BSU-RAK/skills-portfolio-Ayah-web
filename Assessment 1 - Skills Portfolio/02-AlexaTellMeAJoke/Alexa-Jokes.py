@@ -270,3 +270,31 @@ class AlexaJokeApp:
             self.punchline_button_img = None
             self.next_button_img = None
             self.quit_button_img = None
+    
+    def create_button(self, image, command, x, y, text=""):
+        # create a button with image or text fallback
+        if image:
+            button = Button(
+                self.root,
+                image=image,
+                command=command,
+                bd=0,
+                bg="black",
+                activebackground="black",
+                relief="flat",
+                highlightthickness=0
+            )
+        else:
+            button = Button(
+                self.root,
+                text=text,
+                command=command,
+                bg="#1E90FF",
+                fg="white",
+                font=("Arial", 12, "bold"),
+                relief="raised",
+                padx=20,
+                pady=10
+            )
+        button.place(x=x, y=y, anchor="center")
+        return button
