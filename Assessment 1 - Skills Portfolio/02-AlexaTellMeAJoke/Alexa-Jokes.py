@@ -344,10 +344,20 @@ class AlexaJokeApp:
             self.joke_text.config(text="No jokes available!")
             return
         
-        # select random joke
-        self.current_joke = random.choice(self.jokes)
+        # check if jokes are used up
+        if not self.available_jokes:
+            self.joke_text.config(text="Alexa can't think of any more jokes at the moment.\nPlease try again later!")
+            return
+        
+        # select random joke from what's available
+        joke_index = random.choice(list(self.available_jokes))
+        self.current_joke = self.jokes[joke_index]
         self.current_setup, self.current_punchline = self.current_joke
         self.showing_punchline = False
+        
+        # mark this joke as used
+        self.available_jokes.remove(joke_index)
+        self.used_jokes.add(joke_index)
         
         # clear text
         self.joke_text.config(text="")
@@ -400,10 +410,20 @@ class AlexaJokeApp:
             self.joke_text.config(text="No jokes available!")
             return
         
+        # check if jokes are used up
+        if not self.available_jokes:
+            self.joke_text.config(text="Alexa can't think of any more jokes at the moment.\nPlease try again later!")
+            return
+        
         # select random joke
-        self.current_joke = random.choice(self.jokes)
+        joke_index = random.choice(list(self.available_jokes))
+        self.current_joke = self.jokes[joke_index]
         self.current_setup, self.current_punchline = self.current_joke
         self.showing_punchline = False
+        
+        # mark this joke as used
+        self.available_jokes.remove(joke_index)
+        self.used_jokes.add(joke_index)
         
         # clear text
         self.joke_text.config(text="")
