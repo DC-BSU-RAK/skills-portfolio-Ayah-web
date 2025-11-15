@@ -259,7 +259,7 @@ def start_math_quiz(parent_frame, right_panel, barista_label, normal_barista, bl
 
     mute_quiz_btn = tk.Label(parent_frame, image=unmuted_icon, cursor="hand2", bg="#1A1A1A")
     mute_quiz_btn.place(relx=0.05, rely=0.95, anchor="sw")
-    mute_quiz_btn.bind('<Button-1>', lambda e: toggle_music(mute_quiz_btn))
+    mute_quiz_btn.bind('<Button-1>', lambda e: toggle_music_for_quiz(mute_quiz_btn))
 
     current_question = {}
 
@@ -414,6 +414,10 @@ def start_level_story():
     story_label = tk.Label(text_box, text="", font=("Georgia", 16), fg="white", bg="black",
                            wraplength=900, justify="left", anchor="w", padx=20, pady=10)
     story_label.place(x=0, y=0, width=960, height=text_box_height)
+    
+    continue_label = tk.Label(text_box, text="Press any key to continue...", 
+                         font=("Georgia", 12, "italic"), fg="lightgray", bg="black")
+    continue_label.place(x=20, y=text_box_height - 30, width=920, height=25)
 
     # story lines
     story_lines = [
