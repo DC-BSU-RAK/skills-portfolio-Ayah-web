@@ -18,6 +18,11 @@ class AlexaJokeApp:
         # get directory of the script
         self.script_dir = os.path.dirname(os.path.abspath(__file__))
         
+        # music initialization
+        pygame.mixer.init()
+        self.sound_enabled = True
+        self.load_sound_file()
+        
         # load jokes from file
         self.jokes = self.load_jokes()
         self.current_joke = None
@@ -73,6 +78,34 @@ class AlexaJokeApp:
             
         return jokes
     
+    def load_sound_file(self):
+    # load the Alexa sounds MP3 file
+        music_dir = os.path.join(self.script_dir, 'music')
+        sound_path = os.path.join(music_dir, 'alexa-sounds.mp3')
+    
+        try:
+            if os.path.exists(sound_path):
+                pygame.mixer.music.load(sound_path)
+                print(" Loaded alexa-sounds.mp3")
+            else:
+                print(f"Sound file not found: {sound_path}")
+        except Exception as e:
+            print(f"Error loading sound: {e}")
+
+    def play_sound(self, start_time, duration):
+    # play sound from start_time for duration seconds
+        if self.sound_enabled:
+            try:
+                pygame.mixer.music.play(start=start_time)
+                # stop after duration
+                self.root.after(int(duration * 1000), pygame.mixer.music.stop)
+            except:
+               pass
+
+    def stop_sound(self):
+        # stop any playing sound
+        pygame.mixer.music.stop()
+    
     def load_all_gifs(self):
         # load all GIF animations
         gif_files = {
@@ -119,7 +152,8 @@ class AlexaJokeApp:
                 self.gif_frames[name] = []
     
     def show_opening_animation(self):
-        # show the opening animation once, then switch to main interfac
+        self.play_sound(0, 2)
+        # show the opening animation once, then switch to main interface
         self.current_gif_label = Label(self.root, bg="black")
         self.current_gif_label.place(x=0, y=0, width=960, height=540)
         
@@ -168,6 +202,7 @@ class AlexaJokeApp:
         animate()
     
     def create_main_interface(self):
+        self.play_sound(6, 1)
         # create main interface with buttons and alexa GIF
         if self.current_gif_label:
             self.current_gif_label.destroy()
@@ -303,6 +338,7 @@ class AlexaJokeApp:
         return button
     
     def button_click_effect(self, button, callback):
+        self.play_sound(7, 1)
         # create a button click effect with scale animation
         # get original position from stored positions
         if button not in self.button_positions:
@@ -340,6 +376,7 @@ class AlexaJokeApp:
         scale_down()
     
     def tell_joke(self):
+        self.play_sound(2, 3)
         # tell a random joke
         if not self.jokes:
             self.joke_text.config(text="No jokes available!")
