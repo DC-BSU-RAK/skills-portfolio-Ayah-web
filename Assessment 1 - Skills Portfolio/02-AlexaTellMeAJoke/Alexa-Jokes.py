@@ -25,6 +25,8 @@ class AlexaJokeApp:
         self.showing_punchline = False
         # tracking if its the first joke
         self.first_joke = True  
+        self.used_jokes = set()
+        self.available_jokes = set(range(len(self.jokes))) if self.jokes else set()
         
         # GIF frames storing
         self.gif_frames = {}
