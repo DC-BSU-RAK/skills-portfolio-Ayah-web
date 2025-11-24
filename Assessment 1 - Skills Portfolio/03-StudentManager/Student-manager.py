@@ -3,9 +3,11 @@ from tkinter import ttk, messagebox, simpledialog
 from PIL import Image, ImageTk
 import os
 
+# getting file path of txt file
 def get_data_file_path():
     return os.path.join(os.path.dirname(__file__), "../A1 - Resources/studentMarks.txt")
 
+# loading students, reading txt file and splitting accordingly
 def load_students():
     path = get_data_file_path()
     students = []
@@ -25,6 +27,7 @@ def load_students():
             })
     return students
 
+# save student information according to category
 def save_students(students):
     path = get_data_file_path()
     with open(path, "w") as f:
@@ -32,6 +35,7 @@ def save_students(students):
         for s in students:
             f.write(f"{s['id']},{s['name']},{s['c1']},{s['c2']},{s['c3']},{s['exam']}\n")
 
+# getting percentage an dgrade of student
 def get_percentage_and_grade(s):
     total_cw = s['c1'] + s['c2'] + s['c3']
     total = total_cw + s['exam']
@@ -44,3 +48,15 @@ def get_percentage_and_grade(s):
         "F"
     )
     return pct, grade
+
+# class for the student manager main gui
+class StudentManagerApp:
+    def __init__(self, root):
+        # for window characteristics
+        self.root = root
+        self.root.title("🐰 Student Manager Dashboard")
+        self.root.geometry("1100x650")
+        self.root.resizable(False, False)
+        self.root.configure(bg="#eeccd4")
+
+        self.students = load_students()
