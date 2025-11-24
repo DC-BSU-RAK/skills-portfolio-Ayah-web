@@ -104,3 +104,30 @@ class StudentManagerApp:
             lbl.bind("<Enter>", lambda e, lbl=lbl: lbl.config(fg="#9caf88"))
             lbl.bind("<Leave>", lambda e, lbl=lbl: lbl.config(fg="white"))
             lbl.bind("<Button-1>", lambda e, func=cmd: func())
+
+        # area for displaying cards
+        self.display_area = tk.Frame(self.root, bg="#eeccd4")
+        self.display_area.place(x=305, y=249, width=717, height=312)
+        self.show_student_cards()
+
+    # showing student cards
+    def show_student_cards(self, subset=None):
+        for w in self.display_area.winfo_children():
+            w.destroy()
+
+        # scrollbar on right side of card display
+        canvas = tk.Canvas(self.display_area, bg="#eeccd4", bd=0, highlightthickness=0)
+        scroll_y = ttk.Scrollbar(self.display_area, orient="vertical", command=canvas.yview)
+        canvas.configure(yscrollcommand=scroll_y.set)
+        scroll_y.pack(side="right", fill="y")
+        canvas.pack(side="left", fill="both", expand=True)
+
+        inner = tk.Frame(canvas, bg="#eeccd4")
+        inner.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.create_window((0, 0), window=inner, anchor="nw")
+
+        students_to_show = subset if subset else self.students
+        if not students_to_show:
+            tk.Label(inner, text="No student data.", bg="#eeccd4",
+                     fg="#784848", font=("Poppins", 12, "italic")).pack(pady=20)
+            return
