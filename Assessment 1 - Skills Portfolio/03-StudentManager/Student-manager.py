@@ -103,3 +103,4 @@ class StudentManagerApp:
             lbl.place(x=start_x, y=start_y + i * spacing)
             lbl.bind("<Enter>", lambda e, lbl=lbl: lbl.config(fg="#9caf88"))
             lbl.bind("<Leave>", lambda e, lbl=lbl: lbl.config(fg="white"))
+            lbl.bind("<Button-1>", lambda e, func=cmd: func())
