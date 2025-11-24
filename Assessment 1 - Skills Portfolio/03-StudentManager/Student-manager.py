@@ -60,3 +60,19 @@ class StudentManagerApp:
         self.root.configure(bg="#eeccd4")
 
         self.students = load_students()
+
+        # background image
+        bg_path = os.path.join(os.path.dirname(__file__), "images/ui_background.png")
+        bg = Image.open(bg_path)
+        self.bg_photo = ImageTk.PhotoImage(bg)
+        tk.Label(self.root, image=self.bg_photo).place(x=0, y=0, relwidth=1, relheight=1)
+
+        # welcome text for user
+        self.welcome_label = tk.Label(
+            self.root,
+            text="Welcome user, view grades below :>",
+            font=("Poppins", 18, "bold"),
+            fg="white",
+            bg="#eeccd4"
+        )
+        self.welcome_label.place(x=445, y=186)
