@@ -76,3 +76,30 @@ class StudentManagerApp:
             bg="#eeccd4"
         )
         self.welcome_label.place(x=445, y=186)
+
+        # clickable labels for sidebar 
+        start_x, start_y, spacing = 88.5, 156.1, 40
+        menu_items = [
+            ("View All", self.show_student_cards),
+            ("View Individual", self.view_individual),
+            ("Highest Score", self.show_highest),
+            ("Lowest Score", self.show_lowest),
+            ("Sort Records", self.sort_students),
+            ("Add Student", self.add_student),
+            ("Delete Student", self.delete_student),
+            ("Update Record", self.update_student)
+        ]
+
+        # hover effect
+        for i, (text, cmd) in enumerate(menu_items):
+            lbl = tk.Label(
+                self.root,
+                text=text,
+                font=("Poppins", 11, "bold"),
+                fg="white",
+                bg="#eeccd4",
+                cursor="hand2"
+            )
+            lbl.place(x=start_x, y=start_y + i * spacing)
+            lbl.bind("<Enter>", lambda e, lbl=lbl: lbl.config(fg="#9caf88"))
+            lbl.bind("<Leave>", lambda e, lbl=lbl: lbl.config(fg="white"))
