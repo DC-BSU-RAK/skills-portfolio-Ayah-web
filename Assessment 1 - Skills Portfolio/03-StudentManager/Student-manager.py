@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
+from PIL import Image, ImageTk
 import os
 
 def get_data_file_path():
@@ -23,3 +24,23 @@ def load_students():
                 "exam": exam
             })
     return students
+
+def save_students(students):
+    path = get_data_file_path()
+    with open(path, "w") as f:
+        f.write(str(len(students)) + "\n")
+        for s in students:
+            f.write(f"{s['id']},{s['name']},{s['c1']},{s['c2']},{s['c3']},{s['exam']}\n")
+
+def get_percentage_and_grade(s):
+    total_cw = s['c1'] + s['c2'] + s['c3']
+    total = total_cw + s['exam']
+    pct = (total / 160) * 100
+    grade = (
+        "A" if pct >= 70 else
+        "B" if pct >= 60 else
+        "C" if pct >= 50 else
+        "D" if pct >= 40 else
+        "F"
+    )
+    return pct, grade
