@@ -248,3 +248,38 @@ class StudentManagerApp:
             messagebox.showinfo("Deleted", "Student removed.")
         else:
             messagebox.showinfo("Not found", "No student found.")
+
+    # updating student information according to criteria
+    def update_student(self):
+        if not self.students:
+            messagebox.showinfo("Empty", "No data to update.")
+            return
+        sid = simpledialog.askstring("Update", "Enter name or ID:")
+        if not sid:
+            return
+        target = next((s for s in self.students if sid.lower() in s["name"].lower() or s["id"] == sid), None)
+        if not target:
+            messagebox.showinfo("Not found", "Student not found.")
+            return
+        field = simpledialog.askstring("Field", "Which field to update? (name, exam, coursework)")
+        if not field:
+            return
+        if field == "name":
+            target["name"] = simpledialog.askstring("Update", "New name:")
+        elif field == "exam":
+            try:
+                target["exam"] = int(simpledialog.askstring("Update", "New exam mark (0–100):"))
+            except (TypeError, ValueError):
+                messagebox.showerror("Invalid", "Exam mark must be numeric.")
+                return
+        elif field == "coursework":
+            try:
+                target["c1"] = int(simpledialog.askstring("Update", "Coursework 1 (0–20):"))
+                target["c2"] = int(simpledialog.askstring("Update", "Coursework 2 (0–20):"))
+                target["c3"] = int(simpledialog.askstring("Update", "Coursework 3 (0–20):"))
+            except (TypeError, ValueError):
+                messagebox.showerror("Invalid", "Coursework marks must be numeric.")
+                return
+        else:
+            messagebox.showerror("Invalid Field", "Please choose name, exam, or coursework.")
+            return
