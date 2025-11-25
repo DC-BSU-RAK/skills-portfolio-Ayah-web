@@ -181,3 +181,19 @@ class StudentManagerApp:
             self.show_student_cards(subset)
         else:
             messagebox.showinfo("Not found", "Student not found.")
+
+    # showing student with highest grades
+    def show_highest(self):
+        if not self.students:
+            messagebox.showinfo("Empty", "No data available.")
+            return
+        top = max(self.students, key=lambda s: get_percentage_and_grade(s)[0])
+        self.show_student_cards([top])
+
+    # showing student with lowest grades
+    def show_lowest(self):
+        if not self.students:
+            messagebox.showinfo("Empty", "No data available.")
+            return
+        low = min(self.students, key=lambda s: get_percentage_and_grade(s)[0])
+        self.show_student_cards([low])
