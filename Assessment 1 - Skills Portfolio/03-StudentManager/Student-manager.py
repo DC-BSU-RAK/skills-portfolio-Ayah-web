@@ -167,3 +167,17 @@ class StudentManagerApp:
                      bg=col, font=("Poppins", 10), fg="#544c4b").pack(anchor="center")
             tk.Label(card, text=f"{pct:.1f}%   Grade: {grade}",
                      bg=col, font=("Poppins", 10, "bold"), fg="#38533d").pack(anchor="center", pady=(3, 0))
+
+    # viewing individual student
+    def view_individual(self):
+        if not self.students:
+            messagebox.showinfo("Empty", "No data to view.")
+            return
+        q = simpledialog.askstring("View Student", "Enter name or ID:")
+        if not q:
+            return
+        subset = [s for s in self.students if q.lower() in s["name"].lower() or s["id"] == q]
+        if subset:
+            self.show_student_cards(subset)
+        else:
+            messagebox.showinfo("Not found", "Student not found.")
