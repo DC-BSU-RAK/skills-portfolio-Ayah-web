@@ -131,3 +131,39 @@ class StudentManagerApp:
             tk.Label(inner, text="No student data.", bg="#eeccd4",
                      fg="#784848", font=("Poppins", 12, "italic")).pack(pady=20)
             return
+
+        columns = 3
+        card_w, card_h = (220, 135)
+        pad_x, pad_y = (20, 20)
+
+        def colour_for(pct):
+            if pct >= 90:
+                return "#b9d6b0"  
+            elif pct >= 75:
+                return "#d3dcb0"  
+            elif pct >= 60:
+                return "#f4d8b4"  
+            elif pct >= 40:
+                return "#f0b5ad"  
+            else:
+                return "#e09792"  
+
+        for i, s in enumerate(students_to_show):
+            pct, grade = get_percentage_and_grade(s)
+            col = colour_for(pct)
+            r, c = divmod(i, columns)
+            card = tk.Frame(
+                inner, bg=col, width=card_w, height=card_h,
+                highlightbackground="#d1b5b9", highlightthickness=1
+            )
+            card.grid(row=r, column=c, padx=pad_x, pady=pad_y)
+            card.grid_propagate(False)
+
+            tk.Label(card, text=s["name"], bg=col, font=("Poppins", 11, "bold"), fg="#544c4b").pack(anchor="center", pady=(10, 0))
+            tk.Label(card, text=f"ID: {s['id']}", bg=col, font=("Poppins", 10), fg="#544c4b").pack(anchor="center")
+            tk.Label(card, text=f"Coursework: {s['c1']+s['c2']+s['c3']}/60",
+                     bg=col, font=("Poppins", 10), fg="#544c4b").pack(anchor="center")
+            tk.Label(card, text=f"Exam: {s['exam']}/100",
+                     bg=col, font=("Poppins", 10), fg="#544c4b").pack(anchor="center")
+            tk.Label(card, text=f"{pct:.1f}%   Grade: {grade}",
+                     bg=col, font=("Poppins", 10, "bold"), fg="#38533d").pack(anchor="center", pady=(3, 0))
