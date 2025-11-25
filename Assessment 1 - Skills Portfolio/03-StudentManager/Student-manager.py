@@ -231,3 +231,20 @@ class StudentManagerApp:
         save_students(self.students)
         self.show_student_cards()
         messagebox.showinfo("Added", f"{name} added successfully.")
+
+    # deleting a student from txt file and app
+    def delete_student(self):
+        if not self.students:
+            messagebox.showinfo("Empty", "No data to delete.")
+            return
+        q = simpledialog.askstring("Delete Student", "Enter ID or name:")
+        if not q:
+            return
+        before = len(self.students)
+        self.students = [s for s in self.students if not (q.lower() in s["name"].lower() or s["id"] == q)]
+        if len(self.students) < before:
+            save_students(self.students)
+            self.show_student_cards()
+            messagebox.showinfo("Deleted", "Student removed.")
+        else:
+            messagebox.showinfo("Not found", "No student found.")
