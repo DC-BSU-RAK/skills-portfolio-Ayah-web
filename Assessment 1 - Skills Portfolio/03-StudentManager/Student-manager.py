@@ -209,3 +209,25 @@ class StudentManagerApp:
         self.show_student_cards()
         order = "ascending" if asc else "descending"
         messagebox.showinfo("Sorted", f"Student records sorted in {order} order.")
+
+    # adding a student to txt file and app
+    def add_student(self):
+        sid = simpledialog.askstring("Add Student", "Enter student ID (4 digits):")
+        if not sid or not sid.isdigit() or len(sid) != 4:
+            messagebox.showerror("Invalid ID", "ID must be a 4-digit number.")
+            return
+        name = simpledialog.askstring("Add Student", "Enter student name:")
+        if not name:
+            return
+        try:
+            c1 = int(simpledialog.askstring("Add Student", "Coursework 1 (0–20):"))
+            c2 = int(simpledialog.askstring("Add Student", "Coursework 2 (0–20):"))
+            c3 = int(simpledialog.askstring("Add Student", "Coursework 3 (0–20):"))
+            exam = int(simpledialog.askstring("Add Student", "Exam mark (0–100):"))
+        except (TypeError, ValueError):
+            messagebox.showerror("Invalid", "Marks must be numeric.")
+            return
+        self.students.append({"id": sid, "name": name, "c1": c1, "c2": c2, "c3": c3, "exam": exam})
+        save_students(self.students)
+        self.show_student_cards()
+        messagebox.showinfo("Added", f"{name} added successfully.")
