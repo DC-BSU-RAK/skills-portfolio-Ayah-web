@@ -197,3 +197,15 @@ class StudentManagerApp:
             return
         low = min(self.students, key=lambda s: get_percentage_and_grade(s)[0])
         self.show_student_cards([low])
+
+    # sorting students according to percentage, ascending or descending
+    def sort_students(self):
+        if not self.students:
+            messagebox.showinfo("Empty", "No students to sort.")
+            return
+        asc = messagebox.askyesno("Sort", "Sort ascending by percentage?")
+        self.students.sort(key=lambda s: get_percentage_and_grade(s)[0], reverse=not asc)
+        save_students(self.students)
+        self.show_student_cards()
+        order = "ascending" if asc else "descending"
+        messagebox.showinfo("Sorted", f"Student records sorted in {order} order.")
