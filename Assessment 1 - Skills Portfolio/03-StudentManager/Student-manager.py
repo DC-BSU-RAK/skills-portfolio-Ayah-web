@@ -283,3 +283,15 @@ class StudentManagerApp:
         else:
             messagebox.showerror("Invalid Field", "Please choose name, exam, or coursework.")
             return
+
+        # save updates & refresh
+        save_students(self.students)
+        self.show_student_cards()
+        messagebox.showinfo("Updated", "Student record updated successfully.")
+
+
+# running application 
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = StudentManagerApp(root)
+    root.mainloop()
