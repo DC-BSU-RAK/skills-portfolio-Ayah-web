@@ -109,7 +109,7 @@ class StudentManagerApp:
         self.display_area = tk.Frame(self.root, bg="#eeccd4")
         self.display_area.place(x=305, y=249, width=717, height=312)
         self.show_student_cards()
-
+        
     # showing student cards
     def show_student_cards(self, subset=None):
         for w in self.display_area.winfo_children():
@@ -206,6 +206,7 @@ class StudentManagerApp:
         asc = messagebox.askyesno("Sort", "Sort ascending by percentage?")
         self.students.sort(key=lambda s: get_percentage_and_grade(s)[0], reverse=not asc)
         save_students(self.students)
+        self.students = load_students()
         self.show_student_cards()
         order = "ascending" if asc else "descending"
         messagebox.showinfo("Sorted", f"Student records sorted in {order} order.")
@@ -229,6 +230,7 @@ class StudentManagerApp:
             return
         self.students.append({"id": sid, "name": name, "c1": c1, "c2": c2, "c3": c3, "exam": exam})
         save_students(self.students)
+        self.students = load_students()
         self.show_student_cards()
         messagebox.showinfo("Added", f"{name} added successfully.")
 
@@ -244,6 +246,7 @@ class StudentManagerApp:
         self.students = [s for s in self.students if not (q.lower() in s["name"].lower() or s["id"] == q)]
         if len(self.students) < before:
             save_students(self.students)
+            self.students = load_students()
             self.show_student_cards()
             messagebox.showinfo("Deleted", "Student removed.")
         else:
@@ -286,6 +289,7 @@ class StudentManagerApp:
 
         # save updates & refresh
         save_students(self.students)
+        self.students = load_students()
         self.show_student_cards()
         messagebox.showinfo("Updated", "Student record updated successfully.")
 
